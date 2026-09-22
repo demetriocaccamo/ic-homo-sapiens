@@ -154,6 +154,11 @@ const TESTO_EVENTI = "Non ci sono eventi in programma. Il calendario scolastico 
             </div><!-- /col-lg-4 -->`;
   s = s
     .replace(/(<a class="btn btn-sm btn-outline-white mt-4" href=")[^"]*(">Vai alla scuola<\/a>)/, "$1/scuole-la-scuola.html$2")
+    // Immagine accanto al riquadro "Benvenuti"
+    .replace(/<div class="hero-img d-none d-md-block"[^>]*>/,
+      `<div class="hero-img d-none d-md-block" role="img"
+          aria-label="Una figura in stile pittura rupestre cammina su un libro aperto, tra simboli preistorici, lettere e numeri"
+          style="background-image: url('assets/img/hero-home.webp');">`)
     // Notizie, circolari ed eventi
     .replace(/(<section class="section bg-white py-2 py-lg-3 py-xl-5">\s*<div class="container">\s*<div class="row variable-gutters">)[\s\S]*?(<\/div><!-- \/row -->\s*<\/div><!-- \/container -->\s*<\/section><!-- \/section -->)/,
       `$1${blocco("Notizie", cardNotizia(NOTIZIE[0]), "/scuole-sezione-notizie.html#notizie", "Leggi tutte le notizie")}${blocco("Circolari", vuoto(TESTO_CIRCOLARI), "/scuole-sezione-notizie.html#circolari", "Leggi tutte le circolari")}${blocco("Eventi", vuoto("Non ci sono eventi in programma."), "/scuole-sezione-notizie.html#eventi", "Vedi tutti gli eventi", "Vedi tutti")}
