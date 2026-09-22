@@ -11,11 +11,12 @@ a partire dai template HTML ufficiali ([italia/design-scuole-pagine-statiche](ht
 - `scripts/istituto-comprensivo.mjs` — organizza la Didattica per infanzia, primaria e secondaria di I grado.
 - `scripts/scheda.mjs` — applica i dati della scheda anagrafica (contatti, plessi, persone, organizzazione, documenti).
 - `scripts/servizi.mjs` — crea le schede dei servizi (mensa, trasporto, iscrizioni, registro elettronico...) e gli elenchi.
+- `scripts/novita.mjs` — notizie, circolari, eventi e contenuti della home page.
 
 Gli script si eseguono in quest'ordine e si possono rieseguire:
 
 ```bash
-node scripts/personalizza.mjs && node scripts/istituto-comprensivo.mjs && node scripts/scheda.mjs && node scripts/servizi.mjs
+node scripts/personalizza.mjs && node scripts/istituto-comprensivo.mjs && node scripts/scheda.mjs && node scripts/servizi.mjs && node scripts/novita.mjs
 ```
 
 I dati dell'Istituto sono fittizi.
