@@ -1,0 +1,12 @@
+{
+  "name": "ic-homo-sapiens",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sito dell'Istituto Comprensivo Homo Sapiens basato sul modello Scuole di Designers Italia",
+  "type": "module",
+  "scripts": {
+    "personalizza": "node scripts/personalizza.mjs",
+    "dev": "npx --yes serve public -l 3000"
+  },
+  "license": "BSD-3-Clause"
+}
