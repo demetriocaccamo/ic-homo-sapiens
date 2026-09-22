@@ -8,6 +8,16 @@ a partire dai template HTML ufficiali ([italia/design-scuole-pagine-statiche](ht
 - `public/` — il sito (pagine HTML + `assets/`). `index.html` è la home.
 - `public/templates.html` — indice di tutti i 30 template del modello.
 - `scripts/personalizza.mjs` — applica nome della scuola e collegamenti del menu ai template.
+- `scripts/istituto-comprensivo.mjs` — organizza la Didattica per infanzia, primaria e secondaria di I grado.
+- `scripts/scheda.mjs` — applica i dati della scheda anagrafica (contatti, plessi, persone, organizzazione, documenti).
+
+Gli script si eseguono in quest'ordine e si possono rieseguire:
+
+```bash
+node scripts/personalizza.mjs && node scripts/istituto-comprensivo.mjs && node scripts/scheda.mjs
+```
+
+I dati dell'Istituto sono fittizi.
 
 ## In locale
 

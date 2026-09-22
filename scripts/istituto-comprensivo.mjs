@@ -15,15 +15,23 @@ const ORDINI = [
     titolo: "Scuola dell'infanzia",
     sottotitolo: "Per bambine e bambini dai 3 ai 6 anni",
     sezioni: [
+      ["I plessi",
+        `<ul>
+          <li><strong>Infanzia "Maria Montessori"</strong> - Via dei Tigli, 5 - Borgo San Rocco (3 sezioni, 75 alunni)</li>
+          <li><strong>Infanzia "Il Girasole"</strong> - Via Cascina Verde, 12 (3 sezioni, 75 alunni), nello stesso complesso della primaria "Milani"</li>
+        </ul>
+        <p>Le sezioni sono eterogenee per età e accolgono insieme bambine e bambini di 3, 4 e 5 anni.</p>`],
+      ["Tempo scuola",
+        `<ul>
+          <li><strong>Orario:</strong> 40 ore settimanali, dal lunedì al venerdì, dalle 8:00 alle 16:00, con mensa</li>
+          <li><strong>Ingresso:</strong> tra le 8:00 e le 9:00</li>
+          <li><strong>Uscita intermedia:</strong> alle 13:00, su richiesta</li>
+          <li><strong>Pre e post scuola</strong> (servizi comunali): dalle 7:30 e fino alle 18:00</li>
+        </ul>`],
       ["Chi può iscriversi",
         `<p>La scuola dell'infanzia accoglie bambine e bambini dai 3 ai 6 anni. Possono essere iscritti anche i bambini
         che compiono 3 anni entro il 30 aprile dell'anno scolastico di riferimento (anticipatari), compatibilmente con la
-        disponibilità di posti. L'iscrizione si presenta in segreteria, con il modulo cartaceo della scuola.</p>`],
-      ["Tempo scuola",
-        `<ul>
-          <li><strong>Orario ordinario:</strong> 40 ore settimanali, dal lunedì al venerdì, con servizio mensa</li>
-          <li><strong>Orario ridotto:</strong> 25 ore settimanali, solo in fascia antimeridiana</li>
-        </ul>`],
+        disponibilità di posti. L'iscrizione si presenta in segreteria, con il modulo della scuola.</p>`],
       ["I campi di esperienza",
         `<p>Le attività seguono le Indicazioni nazionali per il curricolo e si sviluppano nei cinque campi di esperienza:</p>
         <ul>
@@ -35,7 +43,7 @@ const ORDINI = [
         </ul>`],
       ["Accoglienza e continuità",
         `<p>L'inserimento dei nuovi iscritti avviene in modo graduale nelle prime settimane di scuola. Nell'ultimo anno
-        sono previste attività di continuità con la scuola primaria dell'Istituto.</p>`],
+        i bambini partecipano al progetto di continuità <strong>"Ponti"</strong>, con laboratori condivisi con la scuola primaria.</p>`],
     ],
   },
   {
@@ -43,20 +51,25 @@ const ORDINI = [
     titolo: "Scuola primaria",
     sottotitolo: "Cinque anni di percorso, dai 6 agli 11 anni",
     sezioni: [
+      ["I plessi",
+        `<ul>
+          <li><strong>Primaria "Gianni Rodari"</strong> - Via Alessandro Manzoni, 31 - Centro (10 classi, sezioni A-B, 225 alunni)</li>
+          <li><strong>Primaria "Don Lorenzo Milani"</strong> - Via Cascina Verde, 14 (10 classi, sezioni C-D, 225 alunni)</li>
+        </ul>`],
+      ["Tempo scuola",
+        `<p>In entrambi i plessi tutte le classi sono a <strong>tempo pieno, 40 ore settimanali</strong>: dal lunedì al
+        venerdì, dalle 8:30 alle 16:30, con mensa. Sono disponibili il pre-scuola dalle 7:30 e il post-scuola fino alle
+        18:00, gestiti dal Comune.</p>`],
       ["Chi può iscriversi",
         `<p>Si iscrivono alla classe prima le bambine e i bambini che compiono 6 anni entro il 31 dicembre; possono
         essere iscritti anche coloro che li compiono entro il 30 aprile dell'anno successivo. Le iscrizioni si
         effettuano online sulla piattaforma del Ministero dell'Istruzione e del Merito.</p>`],
-      ["Tempo scuola",
-        `<ul>
-          <li><strong>Tempo normale:</strong> 27 ore settimanali</li>
-          <li><strong>Tempo pieno:</strong> 40 ore settimanali, comprensive del tempo mensa</li>
-        </ul>`],
       ["Le discipline",
         `<p>Italiano, lingua inglese, storia, geografia, matematica, scienze, tecnologia, musica, arte e immagine,
         educazione fisica, religione cattolica o attività alternativa. L'educazione civica è insegnata in modo
         trasversale, per almeno 33 ore annue. Nelle classi quarte e quinte l'educazione motoria è affidata a un docente
-        specialista, per 2 ore settimanali.</p>`],
+        specialista, per 2 ore settimanali. Tra i progetti: <strong>coding e robotica</strong> ed educazione ambientale
+        con <strong>"Olona bene comune"</strong>.</p>`],
       ["Valutazione",
         `<p>La valutazione periodica e finale è espressa con giudizi sintetici, accompagnati dalla descrizione dei
         progressi di apprendimento.</p>`],
@@ -67,18 +80,25 @@ const ORDINI = [
     titolo: "Scuola secondaria di I grado",
     sottotitolo: "Tre anni di percorso, dagli 11 ai 14 anni",
     sezioni: [
-      ["Chi può iscriversi",
-        `<p>Si iscrivono alla classe prima gli alunni che hanno concluso la scuola primaria. Le iscrizioni si
-        effettuano online sulla piattaforma del Ministero dell'Istruzione e del Merito.</p>`],
+      ["Il plesso",
+        `<p><strong>Secondaria "Rita Levi-Montalcini"</strong> - Via Alessandro Volta, 24 - Centro: 24 classi in 8
+        sezioni (A-H), 600 alunni. Nello stesso edificio si trovano la presidenza e la segreteria.</p>`],
       ["Tempo scuola",
-        `<ul>
-          <li><strong>Tempo normale:</strong> 30 ore settimanali</li>
-          <li><strong>Tempo prolungato:</strong> 36 ore settimanali, con rientri pomeridiani e servizio mensa</li>
-        </ul>`],
-      ["Le discipline",
+        `<p>Tutte le sezioni sono a <strong>tempo normale, 30 ore settimanali</strong>: dal lunedì al venerdì, dalle 8:00
+        alle 14:00.</p>`],
+      ["Le discipline e le lingue",
         `<p>Italiano, storia, geografia, matematica, scienze, lingua inglese, seconda lingua comunitaria, tecnologia,
         arte e immagine, musica, scienze motorie e sportive, religione cattolica o attività alternativa, educazione
-        civica.</p>`],
+        civica.</p>
+        <ul>
+          <li><strong>Francese</strong>: sezioni B, D, F</li>
+          <li><strong>Spagnolo</strong>: sezioni A, C, E, G, H</li>
+        </ul>
+        <p>Con l'<strong>inglese potenziato</strong> gli alunni di terza possono conseguire la certificazione Cambridge A2 Key.</p>`],
+      ["Accoglienza in classe prima",
+        `<p>Molti alunni arrivano dalle scuole primarie dei comuni vicini. Il progetto di continuità <strong>"Ponti"</strong>
+        prevede open day e laboratori ponte aperti anche a loro, per accompagnare tutti nel passaggio alla secondaria.
+        Gli alunni dei comuni limitrofi raggiungono la scuola con le linee extraurbane di trasporto pubblico.</p>`],
       ["Esame di Stato e orientamento",
         `<p>Il percorso si conclude con l'Esame di Stato conclusivo del primo ciclo di istruzione: prove scritte di
         italiano, matematica e lingue straniere e un colloquio. In classe terza gli alunni svolgono le prove INVALSI e
@@ -156,7 +176,7 @@ for (const f of readdirSync(DIR).filter((f) => f.endsWith(".html") && f !== "tem
   const prima = s;
   if (!s.includes('class="text-underline-hover" href="/scuola-infanzia.html"')) {
     // Menu desktop e mobile: dopo "Offerta formativa"
-    s = s.replace(/( *)<li>\s*<a ([^>]*?)href="\/scuole-didattica\.html"([^>]*)>Offerta formativa<\/a>\s*<\/li>/g,
+    s = s.replace(/( *)<li>\s*<a ((?:(?!text-underline-hover)[^>])*?)href="\/scuole-didattica\.html"([^>]*)>Offerta formativa<\/a>\s*<\/li>/g,
       (m, indent, pre, post) => `${m}\n${MENU_ORDINI(indent, pre, post)}`);
     // Footer
     s = s.replace(/( *)<li><a class="text-underline-hover" href="\/scuole-didattica\.html">Offerta formativa<\/a><\/li>/g,
