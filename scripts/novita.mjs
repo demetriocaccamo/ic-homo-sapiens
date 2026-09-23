@@ -155,8 +155,8 @@ const TESTO_EVENTI = "Non ci sono eventi in programma. Il calendario scolastico 
   s = s
     .replace(/(<a class="btn btn-sm btn-outline-white mt-4" href=")[^"]*(">Vai alla scuola<\/a>)/, "$1/scuole-la-scuola.html$2")
     // Immagine accanto al riquadro "Benvenuti"
-    .replace(/<div class="hero-img d-none d-md-block"[^>]*>/,
-      `<div class="hero-img d-none d-md-block" role="img"
+    .replace(/<div class="hero-img[^"]*"[^>]*>/,
+      `<div class="hero-img" role="img"
           aria-label="Una figura in stile pittura rupestre cammina su un libro aperto, tra simboli preistorici, lettere e numeri"
           style="background-image: url('assets/img/hero-home.webp');">`)
     // Notizie, circolari ed eventi
