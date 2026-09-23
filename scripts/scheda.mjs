@@ -110,14 +110,14 @@ const cardLuogo = (titolo, sotto) => `
 const cardDoc = (titolo, descr, href = "#") => `
             <div class="col-lg-4 mb-3 mb-lg-4">
               <div class="card card-bg card-icon h-100 rounded">
-                <a href="${href}"${href.startsWith("http") ? ' target="_blank" rel="noopener"' : ""}>
+                <a href="${href}"${href.endsWith(".pdf") ? ' target="_blank" rel="noopener" aria-label="' + titolo.replace(/"/g, "&quot;") + ' (PDF, apre in una nuova scheda)"' : ""}>
                   <div class="card-body">
                     <svg class="icon it-pdf-document">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#it-pdf-document"></use>
                     </svg>
                     <div class="card-icon-content">
                       <p><strong>${titolo}</strong></p>
-                      <small>${descr}</small>
+                      <small>${descr}${href.endsWith(".pdf") ? " - PDF" : ""}</small>
                     </div><!-- /card-icon-content -->
                   </div><!-- /card-body -->
                 </a>
@@ -226,10 +226,17 @@ for (const f of readdirSync(DIR).filter((f) => f.endsWith(".html") && f !== "tem
     .replace(/<h3><a href="#\/">Piano triennale offerta formativa \(PTOF\) 2022-2025<\/a><\/h3>/,
       '<h3><a href="/scuole-documenti.html">Piano triennale dell\'offerta formativa (PTOF) 2025/26 - 2027/28</a></h3>')
     .replace(/aria-label="scopri PTOF 2022-2025 "/, 'aria-label="scopri il PTOF 2025/26 - 2027/28"')
-    .replace(/<h3><a href="#">Rapporto di autovalutazione \(RAV\)<\/a>/, '<h3><a href="/scuole-documenti.html">Rapporto di autovalutazione (RAV)</a>')
+    .replace(/<h3><a href="#">Rapporto di autovalutazione \(RAV\)<\/a>/, '<h3><a href="/documenti/rav-sintesi.pdf">Rapporto di autovalutazione (RAV)</a>')
     .replace(/<h3><a href="#">Regolamento d'Istituto<\/a>/, '<h3><a href="/scuole-documenti.html">Regolamento d\'istituto</a>')
     .replace(/<p>Versione dicembre 2021<\/p>/, "<p>Comprende il regolamento di disciplina della scuola secondaria</p>")
     .replace(/<a class="read-more" href="#" aria-label="scopri/g, '<a class="read-more" href="/scuole-documenti.html" aria-label="scopri')
+    // Documenti in evidenza: collegamento diretto ai PDF (titolo e pulsante "Scopri")
+    .replace(/<h3><a href="[^"]*">(Piano triennale dell'offerta formativa)/, '<h3><a href="/documenti/ptof-2025-2028.pdf">$1')
+    .replace(/<h3><a href="[^"]*">(Rapporto di autovalutazione)/, '<h3><a href="/documenti/rav-sintesi.pdf">$1')
+    .replace(/<h3><a href="[^"]*">(Regolamento d'istituto)/, '<h3><a href="/documenti/regolamento-istituto.pdf">$1')
+    .replace(/<a class="read-more" href="[^"]*" aria-label="scopri il PTOF/, '<a class="read-more" href="/documenti/ptof-2025-2028.pdf" aria-label="scopri il PTOF')
+    .replace(/<a class="read-more" href="[^"]*" aria-label="scopri RAV/, '<a class="read-more" href="/documenti/rav-sintesi.pdf" aria-label="scopri RAV')
+    .replace(/<a class="read-more" href="[^"]*" aria-label="scopri Regolamento/, '<a class="read-more" href="/documenti/regolamento-istituto.pdf" aria-label="scopri Regolamento')
     .replace(/href="#">Vedi tutti i luoghi/, 'href="/scuole-luoghi.html">Vedi tutti i luoghi')
     .replace(/Gli edifici dell'Istituto: scuola dell'infanzia, scuola primaria e scuola secondaria di I grado/,
       "Due scuole dell'infanzia, due scuole primarie e una scuola secondaria di I grado nel centro, a Borgo San Rocco e a Cascina Verde")
@@ -323,19 +330,19 @@ ${PLESSI.map((p) => `                  <li><strong>${p.nome}</strong> - ${p.indi
   s = sottotitoloHero(s, "I documenti fondamentali dell'Istituto");
   const sezioni =
     sezioneDoc("bg-white", "Progettazione e autovalutazione", [
-      ["Piano triennale dell'offerta formativa (PTOF)", "Triennio 2025/26 - 2027/28, con aggiornamento annuale approvato dal Consiglio d'istituto"],
-      ["Rapporto di autovalutazione (RAV)", "Ultima pubblicazione su Scuola in Chiaro", "https://unica.istruzione.gov.it/"],
-      ["Piano di miglioramento", "Le azioni di miglioramento collegate al RAV"],
-      ["Curricolo verticale", "Dall'infanzia alla secondaria, comprende il curricolo di educazione civica"],
+      ["Piano triennale dell'offerta formativa (PTOF)", "Triennio 2025/26 - 2027/28, con aggiornamento annuale approvato dal Consiglio d'istituto", "/documenti/ptof-2025-2028.pdf"],
+      ["Rapporto di autovalutazione (RAV)", "Sintesi per le famiglie; la versione integrale è su Scuola in Chiaro", "/documenti/rav-sintesi.pdf"],
+      ["Piano di miglioramento", "Le azioni di miglioramento collegate al RAV", "/documenti/piano-di-miglioramento.pdf"],
+      ["Curricolo verticale", "Dall'infanzia alla secondaria, comprende il curricolo di educazione civica", "/documenti/curricolo-verticale.pdf"],
     ]) +
     sezioneDoc("bg-gray-light", "Regolamenti", [
-      ["Regolamento d'istituto", "Comprende il regolamento di disciplina della scuola secondaria"],
-      ["Patto educativo di corresponsabilità", "L'impegno condiviso tra scuola, famiglie e alunni"],
+      ["Regolamento d'istituto", "Comprende il regolamento di disciplina della scuola secondaria", "/documenti/regolamento-istituto.pdf"],
+      ["Patto educativo di corresponsabilità", "L'impegno condiviso tra scuola, famiglie e alunni", "/documenti/patto-corresponsabilita.pdf"],
     ]) +
     sezioneDoc("bg-white", "Inclusione e servizi", [
-      ["Piano annuale per l'inclusione (PAI)", "Le azioni per l'inclusione di tutti gli alunni"],
-      ["Protocollo di accoglienza alunni stranieri", "Modalità di iscrizione, inserimento e accompagnamento"],
-      ["Carta dei servizi", "I servizi offerti dall'Istituto e i relativi standard"],
+      ["Piano annuale per l'inclusione (PAI)", "Le azioni per l'inclusione di tutti gli alunni", "/documenti/piano-annuale-inclusione.pdf"],
+      ["Protocollo di accoglienza alunni stranieri", "Modalità di iscrizione, inserimento e accompagnamento", "/documenti/protocollo-accoglienza-alunni-stranieri.pdf"],
+      ["Carta dei servizi", "I servizi offerti dall'Istituto e i relativi standard", "/documenti/carta-dei-servizi.pdf"],
     ]);
   write("scuole-documenti.html", dopoHero(s, sezioni));
 }

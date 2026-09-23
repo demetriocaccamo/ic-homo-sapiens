@@ -12,6 +12,7 @@ a partire dai template HTML ufficiali ([italia/design-scuole-pagine-statiche](ht
 - `scripts/scheda.mjs` — applica i dati della scheda anagrafica (contatti, plessi, persone, organizzazione, documenti).
 - `scripts/servizi.mjs` — crea le schede dei servizi (mensa, trasporto, iscrizioni, registro elettronico...) e gli elenchi.
 - `scripts/novita.mjs` — notizie, circolari, eventi e contenuti della home page.
+- `scripts/documenti_pdf.py` — genera i 9 PDF di "Le carte della scuola" in `public/documenti/` (richiede `pip install reportlab pypdf`).
 
 Gli script si eseguono in quest'ordine e si possono rieseguire:
 
