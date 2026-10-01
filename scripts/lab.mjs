@@ -22,6 +22,14 @@ const LEZIONI = [
   },
 ];
 
+// Il CSS del sito aggiunge un elemento invisibile (:target::before) alla sezione raggiunta da un link interno,
+// per compensare l'intestazione fissa. Nelle griglie delle lezioni quell'elemento occupa una colonna e
+// restringe il contenuto: lo si toglie e si compensa l'intestazione con scroll-margin-top.
+const CORREZIONI = `<style>
+main [id]:target::before{content:none;display:none}
+main [id]{scroll-margin-top:130px}
+</style>`;
+
 // ---------------------------------------------------------------- pagine delle lezioni
 const guscio = read("scuole-pagina-singola.html");
 for (const [n, l] of LEZIONI.entries()) {
@@ -42,7 +50,7 @@ for (const [n, l] of LEZIONI.entries()) {
   const pagina = guscio
     .replace(/<title>[^<]*<\/title>/, () => `<title>${l.titolo} - Lab - Istituto Comprensivo Homo Sapiens</title>`)
     .replace(/<meta name="description" content="[^"]*">/, () => `<meta name="description" content="${descr}">`)
-    .replace("</head>", () => `${stile}\n</head>`)
+    .replace("</head>", () => `${stile}\n${CORREZIONI}\n</head>`)
     .replace(/<main[\s\S]*<\/main>/, () => main);
   write(l.pagina, pagina);
   cpSync(join(RADICE, "lezioni", l.cartella, "materiali"), join(DIR, "lab", l.cartella, "materiali"), { recursive: true });
