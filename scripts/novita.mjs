@@ -85,7 +85,41 @@ const vuoto = (testo) => `
                   <p class="mb-0">${testo}</p>
                 </div>
               </div>`;
-const TESTO_CIRCOLARI = "Non ci sono circolari pubblicate.";
+// Circolari: i PDF sono in public/circolari/. La più recente per prima.
+const CIRCOLARI = [
+  {
+    numero: 27, data: "26 ottobre 2026", file: "circ027_2026_consigli-classe-b.pdf",
+    titolo: "Consigli delle classi 1ª B, 2ª B e 3ª B di martedì 10 novembre",
+    destinatari: "Docenti e rappresentanti dei genitori delle classi 1ª B, 2ª B e 3ª B, secondaria Levi-Montalcini",
+    sommario: "Martedì 10 novembre, dalle 14.30 alle 17.30, sono convocati i consigli delle classi 1ª B, 2ª B e 3ª B nell'aula riunioni della secondaria.",
+  },
+  {
+    numero: 23, data: "13 ottobre 2026", file: "circ023_2026_uscita-museo.pdf",
+    titolo: "Mercoledì 11 novembre uscita didattica al Museo di Storia Naturale di Milano",
+    destinatari: "Famiglie e docenti delle classi 3ª A e 3ª B, primaria Rodari",
+    sommario: "Le classi 3ª A e 3ª B della primaria Rodari visitano il Museo di Storia Naturale di Milano. Autorizzazione e quota entro venerdì 23 ottobre.",
+    allegati: [["Modulo di autorizzazione", "circ023_2026_uscita-museo_all1.pdf"]],
+  },
+  {
+    numero: 21, data: "12 ottobre 2026", file: "circ021_2026_sciopero.pdf",
+    titolo: "Venerdì 23 ottobre sciopero nazionale della scuola",
+    destinatari: "Famiglie, personale docente e ATA",
+    sommario: "Venerdì 23 ottobre è previsto uno sciopero nazionale del personale della scuola, per l'intera giornata. Le lezioni potrebbero non svolgersi regolarmente.",
+  },
+];
+const pdf = (file, testo, aria) => `<a href="/circolari/${file}" target="_blank" rel="noopener" aria-label="${aria} (PDF, apre in una nuova scheda)">${testo}</a>`;
+const cardCircolare = (c, h = "h3") => `
+              <div class="card card-bg card-vertical-thumb bg-white card-thumb-rounded mb-4">
+                <div class="card-body">
+                  <div class="card-content">
+                    <small class="h6 text-greendark">Circolare n. ${c.numero} del ${c.data}</small>
+                    <${h} class="h5">${pdf(c.file, c.titolo, `Circolare n. ${c.numero}: ${c.titolo}`)}</${h}>
+                    <p class="text-normal">${c.sommario}</p>
+                    <p class="mb-0"><small><strong>A chi è rivolta:</strong> ${c.destinatari}</small></p>${(c.allegati || []).map(([t, f]) => `
+                    <p class="mb-0 mt-2"><small><strong>Allegato:</strong> ${pdf(f, t, `Allegato alla circolare n. ${c.numero}: ${t}`)} (PDF)</small></p>`).join("")}
+                  </div>
+                </div><!-- /card-body -->
+              </div><!-- /card -->`;
 const TESTO_EVENTI = "Non ci sono eventi in programma. Il calendario scolastico 2026/2027 sarà pubblicato dopo la verifica della delibera regionale della Lombardia e delle delibere del Consiglio d'istituto.";
 
 // ---------------------------------------------------------------- panoramica Novità
@@ -106,8 +140,9 @@ const TESTO_EVENTI = "Non ci sono eventi in programma. Il calendario scolastico 
             <div class="col-lg-4">${cardNotizia(n)}
             </div>`).join("")) +
     sezione("bg-white", "circolari", "Circolari", `
-            <div class="col-lg-8">${vuoto(TESTO_CIRCOLARI)}
-            </div>`) +
+${CIRCOLARI.map((c) => `
+            <div class="col-lg-4">${cardCircolare(c)}
+            </div>`).join("")}`) +
     sezione("bg-gray-light", "eventi", "Eventi", `
             <div class="col-lg-8">${vuoto(TESTO_EVENTI)}
             </div>`);
@@ -161,7 +196,7 @@ const TESTO_EVENTI = "Non ci sono eventi in programma. Il calendario scolastico 
           style="background-image: url('assets/img/hero-home.webp');">`)
     // Notizie, circolari ed eventi
     .replace(/(<section class="section bg-white py-2 py-lg-3 py-xl-5">\s*<div class="container">\s*<div class="row variable-gutters">)[\s\S]*?(<\/div><!-- \/row -->\s*<\/div><!-- \/container -->\s*<\/section><!-- \/section -->)/,
-      `$1${blocco("Notizie", cardNotizia(NOTIZIE[0]), "/scuole-sezione-notizie.html#notizie", "Leggi tutte le notizie")}${blocco("Circolari", vuoto(TESTO_CIRCOLARI), "/scuole-sezione-notizie.html#circolari", "Leggi tutte le circolari")}${blocco("Eventi", vuoto("Non ci sono eventi in programma."), "/scuole-sezione-notizie.html#eventi", "Vedi tutti gli eventi", "Vedi tutti")}
+      `$1${blocco("Notizie", cardNotizia(NOTIZIE[0]), "/scuole-sezione-notizie.html#notizie", "Leggi tutte le notizie")}${blocco("Circolari", cardCircolare(CIRCOLARI[0]), "/scuole-sezione-notizie.html#circolari", "Leggi tutte le circolari")}${blocco("Eventi", vuoto("Non ci sono eventi in programma."), "/scuole-sezione-notizie.html#eventi", "Vedi tutti gli eventi", "Vedi tutti")}
           $2`)
     // Servizi in evidenza
     .replace(/(<div class="container position-relative slided-top">)[\s\S]*?(<div class="pb-5 text-center">\s*<a class="text-underline" href=")[^"]*(">)/,
