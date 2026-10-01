@@ -1,7 +1,7 @@
 // Sezione "Lab": lezioni inserite nel layout del sito.
 // - lab.html: elenco delle lezioni
 // - una pagina per lezione, a partire dai file in lezioni/<cartella>/ (intestazione e footer sono quelli del sito)
-// - barra in alto: la voce "Lab" sostituisce "Argomento 1, 2, 3, Tutti gli argomenti"
+// - barra in alto: la voce "Lab" sostituisce "Argomento 1, 2, 3"; resta "Tutti gli argomenti"
 // Uso: node scripts/lab.mjs (per ultimo, dopo gli altri script)
 import { readFileSync, writeFileSync, readdirSync, cpSync } from "node:fs";
 import { join } from "node:path";
@@ -90,7 +90,7 @@ let n = 0;
 for (const f of readdirSync(DIR).filter((f) => f.endsWith(".html") && f !== "templates.html")) {
   const prima = read(f);
   const s = prima.replace(/<nav aria-label="(?:Argomenti|Lab)">(\s*)<ul class="nav-list nav-list-secondary">[\s\S]*?<\/ul>/g,
-    (m, sp) => `<nav aria-label="Lab">${sp}<ul class="nav-list nav-list-secondary">${sp}  <li>${sp}    <a href="/lab.html"${m.includes('tabindex="-1"') ? ' tabindex="-1"' : ""}>Lab</a>${sp}  </li>${sp}</ul>`);
+    (m, sp) => { const t = m.includes('tabindex="-1"') ? ' tabindex="-1"' : ""; return `<nav aria-label="Lab">${sp}<ul class="nav-list nav-list-secondary">${sp}  <li>${sp}    <a href="/lab.html"${t}>Lab</a>${sp}  </li>${sp}  <li>${sp}    <a href="#"${t}>Tutti gli argomenti</a>${sp}  </li>${sp}</ul>`; });
   if (s !== prima) { write(f, s); n++; }
 }
 console.log(`Lab: ${LEZIONI.length} lezione/i, elenco e barra in alto aggiornati (${n} pagine modificate).`);
