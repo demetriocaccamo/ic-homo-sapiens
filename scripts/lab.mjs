@@ -90,7 +90,7 @@ let n = 0;
 for (const f of readdirSync(DIR).filter((f) => f.endsWith(".html") && f !== "templates.html")) {
   const prima = read(f);
   const s = prima.replace(/<nav aria-label="(?:Argomenti|Lab)">(\s*)<ul class="nav-list nav-list-secondary">[\s\S]*?<\/ul>/g,
-    (m, sp) => { const t = m.includes('tabindex="-1"') ? ' tabindex="-1"' : ""; return `<nav aria-label="Lab">${sp}<ul class="nav-list nav-list-secondary">${sp}  <li>${sp}    <a href="/lab.html"${t}>Lab</a>${sp}  </li>${sp}  <li>${sp}    <a href="#"${t}>Tutti gli argomenti</a>${sp}  </li>${sp}</ul>`; });
+    (m, sp) => { const t = m.includes('tabindex="-1"') ? ' tabindex="-1"' : ""; return `<nav aria-label="Lab">${sp}<ul class="nav-list nav-list-secondary">${sp}  <li>${sp}    <a href="/lab.html"${t}>Lab</a>${sp}  </li>${sp}  <li>${sp}    <a href="/scuole-argomenti.html"${t}>Tutti gli argomenti</a>${sp}  </li>${sp}</ul>`; });
   if (s !== prima) { write(f, s); n++; }
 }
 console.log(`Lab: ${LEZIONI.length} lezione/i, elenco e barra in alto aggiornati (${n} pagine modificate).`);

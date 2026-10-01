@@ -227,7 +227,7 @@ for (const sv of SERVIZI) {
     .replace(/<small class="h6 text-purplelight">[^<]*<\/small>/, `<small class="h6 text-purplelight">${cat.label}</small>`)
     .replace(/(<h1 class="mb-3" data-element="service-title">)[^<]*(<\/h1>)/, `$1${sv.titolo}$2`)
     .replace(/(<p data-element="service-description">)[^<]*(<\/p>)/, `$1${sv.descr}$2`)
-    .replace(/(<div class="badges">)[\s\S]*?(<\/div><!-- \/badges -->)/, `$1${sv.argomenti.map((a) => `
+    .replace(/(<h2>Argomenti<\/h2>\s*<div class="badges">)[\s\S]*?(<\/div><!-- \/badges -->)/, `$1${sv.argomenti.map((a) => `
                   <span class="badge badge-sm badge-pill badge-outline-purplelight">${a}</span>`).join("")}
                 $2`)
     .replace(/\s*<section class="bg-alert py-2" id="alert">[\s\S]*?<\/section>/, "")
