@@ -3,13 +3,13 @@
 // - una pagina per lezione, a partire dai file in lezioni/<cartella>/ (intestazione e footer sono quelli del sito)
 // - barra in alto: la voce "Lab" sostituisce "Argomento 1, 2, 3"; resta "Tutti gli argomenti"
 // Uso: node scripts/lab.mjs (per ultimo, dopo gli altri script)
-import { readFileSync, writeFileSync, readdirSync, cpSync } from "node:fs";
+import { readFileSync, writeFileSync, readdirSync, cpSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 
 const RADICE = new URL("../", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
 const DIR = join(RADICE, "public");
 const read = (f) => readFileSync(join(DIR, f), "utf8");
-const write = (f, s) => writeFileSync(join(DIR, f), s);
+const write = (f, s) => { mkdirSync(join(DIR, f, ".."), { recursive: true }); writeFileSync(join(DIR, f), s); };
 
 const LEZIONI = [
   {
@@ -19,6 +19,23 @@ const LEZIONI = [
     titolo: "Dal modulo alla circolare",
     etichetta: "Percorso Circolari per il dirigente",
     descrizione: "Il dirigente compila un breve modulo con i dati della circolare. Claude restituisce il testo già su carta intestata, scritto in un italiano chiaro e con in evidenza i dati che mancano.",
+  },
+  {
+    tipo: "presentazione",
+    cartella: "ufficio-virtuale-ds",
+    sorgente: "Ufficio_virtuale_del_DS.html",
+    pagina: "lab-ufficio-virtuale-ds.html",
+    titolo: "L'ufficio virtuale del DS",
+    etichetta: "Corso di formazione per dirigenti scolastici",
+    descrizione: "Usare l'intelligenza artificiale come metodo di lavoro, non come gadget: Progetti, skill e artefatti di Claude organizzati come i reparti di un ufficio. La presentazione del corso, con sei video dimostrativi.",
+    video: [
+      ["Video_D07_Progetti.mp4", "Un Progetto dall'interno", "Il reparto Corrispondenza e atti: istruzioni, documenti di riferimento e conversazioni raccolti in un unico spazio di lavoro che resta nel tempo."],
+      ["Video_D09_Skill.mp4", "Una skill per la delibera", "La skill delibera-organi-collegiali trasforma gli appunti di una seduta nel testo della delibera, secondo il format della scuola."],
+      ["Video_D11_Artefatti.mp4", "Una circolare come documento", "Un artefatto: la circolare prende forma accanto alla conversazione, pronta da rivedere, correggere e scaricare."],
+      ["Video_D14_Corrispondenza.mp4", "La risposta al genitore", "Un genitore lamenta il poco preavviso di un'uscita didattica: la bozza di risposta è cortese ma ferma, nel tono della scuola e senza dati personali."],
+      ["Video_D16_Documenti_strategici.mp4", "Il controllo di coerenza", "Priorità e traguardi del RAV confrontati con il Piano di miglioramento e il PTOF, con la tabella dei collegamenti e le corrispondenze che mancano."],
+      ["Video_D18_Sito_web.mp4", "Dalla direttiva al sito", "Il sito dell'IC Homo Sapiens si aggiorna descrivendo in italiano che cosa cambiare, un'area alla volta."],
+    ],
   },
 ];
 
@@ -33,6 +50,7 @@ main [id]{scroll-margin-top:130px}
 // ---------------------------------------------------------------- pagine delle lezioni
 const guscio = read("scuole-pagina-singola.html");
 for (const [n, l] of LEZIONI.entries()) {
+  if (l.tipo === "presentazione") { paginaPresentazione(n, l); continue; }
   const src = readFileSync(join(RADICE, "lezioni", l.cartella, l.sorgente), "utf8");
   const stile = src.match(/<style>[\s\S]*?<\/style>/)[0];
   const descr = (src.match(/<meta name="description" content="([^"]*)"/) || [, l.descrizione])[1];
@@ -54,6 +72,78 @@ for (const [n, l] of LEZIONI.entries()) {
     .replace(/<main[\s\S]*<\/main>/, () => main);
   write(l.pagina, pagina);
   cpSync(join(RADICE, "lezioni", l.cartella, "materiali"), join(DIR, "lab", l.cartella, "materiali"), { recursive: true });
+}
+
+// Lezione con presentazione: la presentazione resta un file a sé (lab/<cartella>/presentazione.html),
+// mostrata nella pagina e apribile a schermo intero; i video incorporati diventano file separati.
+function paginaPresentazione(n, l) {
+  const base = `/lab/${l.cartella}`;
+  const src = readFileSync(join(RADICE, "lezioni", l.cartella, l.sorgente), "utf8")
+    .replace(/<video src="data:video\/mp4;base64,[A-Za-z0-9+/=]+"([^>]*?)preload="auto"([^>]*?)\((Video_[^)]+\.mp4)\)"/g,
+      (m, a, b, file) => `<video src="video/${file}"${a}preload="metadata"${b}(${file})"`);
+  if (/data:video/.test(src)) throw new Error(`${l.sorgente}: video incorporati non convertiti`);
+  write(`lab/${l.cartella}/presentazione.html`, src);
+  cpSync(join(RADICE, "lezioni", l.cartella, "Video"), join(DIR, "lab", l.cartella, "video"), { recursive: true });
+
+  const video = l.video.map(([file, titolo, testo]) => `
+            <div class="col-lg-6 mb-4">
+              <div class="card card-bg bg-white rounded h-100">
+                <div class="card-body">
+                  <video controls preload="metadata" playsinline src="${base}/video/${file}" style="width:100%;border-radius:4px;background:#14213D"
+                    aria-label="Video dimostrativo: ${titolo}"></video>
+                  <h3 class="h5 mt-3 mb-2">${titolo}</h3>
+                  <p class="mb-0">${testo}</p>
+                </div>
+              </div>
+            </div>`).join("");
+  const main = `<main id="main-container" class="main-container greendark">
+      <section class="section py-2 bg-white d-none d-sm-block">
+        <div class="container"><div class="row variable-gutters"><div class="col-12"><div class="breadcrumb">
+          <nav aria-label="breadcrumb"><ol class="breadcrumbs-list" data-element="breadcrumb">
+            <li class="breadcrumb-item"><a href="/" title="Vai alla pagina: Home">Home</a></li>
+            <li class="breadcrumb-item"><a href="/lab.html" title="Vai alla pagina: Lab">Lab</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><span>${l.titolo}</span></li>
+          </ol></nav>
+        </div></div></div></div>
+      </section>
+
+      <section class="section bg-greendark bg-greendarkgradient py-5 position-relative d-flex align-items-center overflow-hidden">
+        <div class="container"><div class="row variable-gutters"><div class="col-lg-8"><div class="hero-title text-left">
+          <small class="h6 text-white">Lab · Lezione ${n + 1} · ${l.etichetta}</small>
+          <h1 class="p-0 mb-2 mt-2">${l.titolo}</h1>
+          <p class="h4 font-weight-normal">${l.descrizione}</p>
+        </div></div></div></div>
+      </section>
+
+      <section class="section bg-white py-5" id="presentazione">
+        <div class="container">
+          <div class="title-section mb-3"><h2 class="h4">La presentazione</h2></div>
+          <p>Si sfoglia con le frecce in basso a destra, che compaiono passando con il mouse sulla presentazione, oppure
+            con i tasti freccia dopo averci cliccato sopra. Nelle slide di dimostrazione un clic avvia il video.</p>
+          <div style="position:relative;width:100%;aspect-ratio:16/9;background:#0F1A2B;border-radius:4px;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.12)">
+            <iframe src="${base}/presentazione.html" title="Presentazione: ${l.titolo}" allow="fullscreen"
+              allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+          </div>
+          <p class="mt-3"><a class="btn btn-sm btn-outline-greendark" href="${base}/presentazione.html" target="_blank" rel="noopener">Apri la presentazione a schermo intero</a></p>
+        </div>
+      </section>
+
+      <section class="section bg-gray-light py-5" id="video">
+        <div class="container">
+          <div class="title-section mb-3"><h2 class="h4">I video dimostrativi</h2></div>
+          <p class="mb-4">Gli stessi video della presentazione, da guardare uno per uno.</p>
+          <div class="row variable-gutters">${video}
+          </div>
+          <p class="mt-2"><a href="/lab.html">Torna alle lezioni del Lab</a></p>
+        </div>
+      </section>
+    </main>`;
+  const pagina = guscio
+    .replace(/<title>[^<]*<\/title>/, () => `<title>${l.titolo} - Lab - Istituto Comprensivo Homo Sapiens</title>`)
+    .replace(/<meta name="description" content="[^"]*">/, () => `<meta name="description" content="${l.descrizione}">`)
+    .replace("</head>", () => `${CORREZIONI}\n</head>`)
+    .replace(/<main[\s\S]*<\/main>/, () => main);
+  write(l.pagina, pagina);
 }
 
 // ---------------------------------------------------------------- elenco delle lezioni
