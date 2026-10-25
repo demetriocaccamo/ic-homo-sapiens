@@ -11,15 +11,8 @@ const DIR = join(RADICE, "public");
 const read = (f) => readFileSync(join(DIR, f), "utf8");
 const write = (f, s) => { mkdirSync(join(DIR, f, ".."), { recursive: true }); writeFileSync(join(DIR, f), s); };
 
+// L'ordine dell'elenco è quello della pagina Lab (Lezione 1, 2, ...)
 const LEZIONI = [
-  {
-    cartella: "percorso-circolari",
-    sorgente: "percorso-circolari.html",
-    pagina: "lab-percorso-circolari.html",
-    titolo: "Dal modulo alla circolare",
-    etichetta: "Percorso Circolari per il dirigente",
-    descrizione: "Il dirigente compila un breve modulo con i dati della circolare. Claude restituisce il testo già su carta intestata, scritto in un italiano chiaro e con in evidenza i dati che mancano.",
-  },
   {
     tipo: "presentazione",
     cartella: "ufficio-virtuale-ds",
@@ -36,6 +29,14 @@ const LEZIONI = [
       ["Video_D16_Documenti_strategici.mp4", "Il controllo di coerenza", "Priorità e traguardi del RAV confrontati con il Piano di miglioramento e il PTOF, con la tabella dei collegamenti e le corrispondenze che mancano."],
       ["Video_D18_Sito_web.mp4", "Dalla direttiva al sito", "Il sito dell'IC Homo Sapiens si aggiorna descrivendo in italiano che cosa cambiare, un'area alla volta."],
     ],
+  },
+  {
+    cartella: "percorso-circolari",
+    sorgente: "percorso-circolari.html",
+    pagina: "lab-percorso-circolari.html",
+    titolo: "Dal modulo alla circolare",
+    etichetta: "Percorso Circolari per il dirigente",
+    descrizione: "Il dirigente compila un breve modulo con i dati della circolare. Claude restituisce il testo già su carta intestata, scritto in un italiano chiaro e con in evidenza i dati che mancano.",
   },
 ];
 
