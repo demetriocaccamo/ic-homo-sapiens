@@ -20,7 +20,7 @@ const LEZIONI = [
     pagina: "lab-ufficio-virtuale-ds.html",
     titolo: "L'ufficio virtuale del DS",
     etichetta: "Corso di formazione per dirigenti scolastici",
-    descrizione: "Usare l'intelligenza artificiale come metodo di lavoro, non come gadget: Progetti, skill e artefatti di Claude organizzati come i reparti di un ufficio. La presentazione del corso, con sei video dimostrativi.",
+    descrizione: "Usare l'intelligenza artificiale come metodo di lavoro, non come gadget: Progetti, skill, artefatti e connettori di Claude organizzati come i reparti di un ufficio. La presentazione del corso, con sei video dimostrativi.",
     video: [
       ["Video_D07_Progetti.mp4", "Un Progetto dall'interno", "Il reparto Corrispondenza e atti: istruzioni, documenti di riferimento e conversazioni raccolti in un unico spazio di lavoro che resta nel tempo."],
       ["Video_D09_Skill.mp4", "Una skill per la delibera", "La skill delibera-organi-collegiali trasforma gli appunti di una seduta nel testo della delibera, secondo il format della scuola."],
