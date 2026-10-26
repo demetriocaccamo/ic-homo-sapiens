@@ -34,9 +34,9 @@ const LEZIONI = [
     cartella: "percorso-circolari",
     sorgente: "percorso-circolari.html",
     pagina: "lab-percorso-circolari.html",
-    titolo: "Dal modulo alla circolare",
+    titolo: "Dai dati alla circolare",
     etichetta: "Percorso Circolari per il dirigente",
-    descrizione: "Il dirigente compila un breve modulo con i dati della circolare. Claude restituisce il testo già su carta intestata, scritto in un italiano chiaro e con in evidenza i dati che mancano.",
+    descrizione: "Il dirigente fornisce i dati essenziali della circolare. Claude restituisce il testo già su carta intestata, scritto in un italiano chiaro e con in evidenza i dati che mancano.",
   },
 ];
 
