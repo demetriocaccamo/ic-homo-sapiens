@@ -5,6 +5,7 @@
 // Uso: node scripts/lab.mjs (per ultimo, dopo gli altri script)
 import { readFileSync, writeFileSync, readdirSync, cpSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
+import { createHash } from "node:crypto";
 
 const RADICE = new URL("../", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
 const DIR = join(RADICE, "public");
@@ -79,9 +80,17 @@ for (const [n, l] of LEZIONI.entries()) {
 // mostrata nella pagina e apribile a schermo intero; i video incorporati diventano file separati.
 function paginaPresentazione(n, l) {
   const base = `/lab/${l.cartella}`;
+  // Ogni video incorporato è collegato al file della cartella Video con lo stesso contenuto
+  // (il nome nell'etichetta può cambiare quando si aggiungono slide).
+  const cartellaVideo = join(RADICE, "lezioni", l.cartella, "Video");
+  const impronta = (b) => createHash("sha1").update(b).digest("hex");
+  const perContenuto = new Map(readdirSync(cartellaVideo).map((f) => [impronta(readFileSync(join(cartellaVideo, f))), f]));
   const src = readFileSync(join(RADICE, "lezioni", l.cartella, l.sorgente), "utf8")
-    .replace(/<video src="data:video\/mp4;base64,[A-Za-z0-9+/=]+"([^>]*?)preload="auto"([^>]*?)\((Video_[^)]+\.mp4)\)"/g,
-      (m, a, b, file) => `<video src="video/${file}"${a}preload="metadata"${b}(${file})"`);
+    .replace(/<video src="data:video\/mp4;base64,([A-Za-z0-9+/=]+)"([^>]*?)preload="auto"/g, (m, dati, a) => {
+      const file = perContenuto.get(impronta(Buffer.from(dati, "base64")));
+      if (!file) throw new Error(`${l.sorgente}: un video incorporato non corrisponde a nessun file della cartella Video`);
+      return `<video src="video/${file}"${a}preload="metadata"`;
+    });
   if (/data:video/.test(src)) throw new Error(`${l.sorgente}: video incorporati non convertiti`);
   write(`lab/${l.cartella}/presentazione.html`, src);
   cpSync(join(RADICE, "lezioni", l.cartella, "Video"), join(DIR, "lab", l.cartella, "video"), { recursive: true });
