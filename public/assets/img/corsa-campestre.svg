@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1280 960" role="img" aria-labelledby="t d">
+  <title id="t">Corsa campestre</title>
+  <desc id="d">Illustrazione: ragazze e ragazzi corrono su un sentiero tra i prati lungo il torrente, segnato da bandierine, con alberi e colline sullo sfondo.</desc>
+  <defs>
+    <linearGradient id="cielo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F6E7C8"/>
+      <stop offset="1" stop-color="#FBF3E4"/>
+    </linearGradient>
+    <linearGradient id="prato" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#B9C98A"/>
+      <stop offset="1" stop-color="#93AE68"/>
+    </linearGradient>
+    <linearGradient id="fiume" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8FB7C4"/>
+      <stop offset="1" stop-color="#5E93A6"/>
+    </linearGradient>
+    <!-- Corridore, piedi a y=0, altezza circa 190 -->
+    <g id="corridore" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path class="gamba-dietro" d="M0,-92 L-26,-48 L-58,-30" stroke-width="15"/>
+      <path class="braccio-dietro" d="M6,-150 L-22,-124 L-34,-98" stroke-width="12"/>
+      <path class="busto" d="M0,-92 L10,-152" stroke-width="30"/>
+      <path class="gamba-avanti" d="M0,-92 L30,-58 L20,-8 L34,-4" stroke-width="15"/>
+      <path class="braccio-avanti" d="M8,-148 L36,-128 L56,-150" stroke-width="12"/>
+      <circle class="testa" cx="16" cy="-178" r="17" stroke="none"/>
+    </g>
+  </defs>
+
+  <!-- cielo, sole, nuvole -->
+  <rect width="1280" height="960" fill="url(#cielo)"/>
+  <circle cx="1060" cy="150" r="62" fill="#F2B544"/>
+  <g stroke="#F2B544" stroke-width="7" stroke-linecap="round">
+    <path d="M1060,58 v-26 M1060,242 v26 M968,150 h-26 M1152,150 h26 M995,85 l-18,-18 M1125,215 l18,18 M995,215 l-18,18 M1125,85 l18,-18"/>
+  </g>
+  <g fill="#FFFFFF" opacity=".85">
+    <ellipse cx="300" cy="140" rx="110" ry="30"/><ellipse cx="350" cy="118" rx="70" ry="32"/>
+    <ellipse cx="760" cy="95" rx="90" ry="24"/><ellipse cx="800" cy="78" rx="55" ry="25"/>
+  </g>
+
+  <!-- colline lontane -->
+  <path d="M0,420 C160,340 320,360 470,395 C620,430 760,350 930,360 C1080,370 1180,400 1280,380 L1280,520 L0,520 Z" fill="#C9C99A"/>
+  <path d="M0,470 C200,410 380,440 560,455 C760,470 900,420 1080,430 C1170,435 1230,450 1280,445 L1280,560 L0,560 Z" fill="#AFC07E"/>
+
+  <!-- filari di alberi lontani -->
+  <g fill="#7E9A57">
+    <circle cx="90" cy="440" r="26"/><circle cx="130" cy="432" r="32"/><circle cx="175" cy="445" r="24"/>
+    <circle cx="880" cy="408" r="24"/><circle cx="915" cy="398" r="30"/><circle cx="955" cy="410" r="22"/>
+    <circle cx="1190" cy="420" r="26"/><circle cx="1228" cy="412" r="30"/>
+  </g>
+
+  <!-- prato -->
+  <path d="M0,520 C260,490 520,505 760,515 C980,524 1150,505 1280,500 L1280,960 L0,960 Z" fill="url(#prato)"/>
+
+  <!-- torrente Olona -->
+  <path d="M1280,560 C1100,575 980,600 900,640 C800,690 860,760 700,800 C560,835 380,850 240,900 C170,925 120,945 90,960 L0,960 L0,930 C90,895 200,855 360,825 C520,795 660,770 720,720 C790,665 760,610 880,580 C980,555 1120,548 1280,540 Z" fill="url(#fiume)"/>
+  <path d="M1180,556 C1100,562 1040,572 990,586 M760,700 C730,740 650,770 560,790 M400,840 C330,856 260,878 200,900" stroke="#D6E8EE" stroke-width="5" stroke-linecap="round" fill="none" opacity=".8"/>
+
+  <!-- sentiero della corsa -->
+  <path d="M600,505 C520,540 470,575 520,610 C580,650 700,640 690,700 C680,760 470,770 380,820 C300,862 330,920 360,960 L560,960 C520,915 520,880 600,850 C720,805 860,780 850,700 C842,640 720,640 660,612 C610,588 640,548 680,510 Z" fill="#E9D6A8"/>
+
+  <!-- alberi in primo piano -->
+  <g>
+    <rect x="1086" y="600" width="18" height="90" rx="6" fill="#8A5A34"/>
+    <circle cx="1095" cy="570" r="62" fill="#6F8F4A"/><circle cx="1050" cy="600" r="42" fill="#7E9A57"/><circle cx="1140" cy="598" r="40" fill="#7E9A57"/>
+    <rect x="166" y="610" width="16" height="80" rx="6" fill="#8A5A34"/>
+    <circle cx="174" cy="580" r="54" fill="#6F8F4A"/><circle cx="136" cy="610" r="36" fill="#7E9A57"/>
+  </g>
+
+  <!-- bandierine lungo il percorso -->
+  <g stroke="#6B4A2E" stroke-width="4">
+    <line x1="560" y1="540" x2="560" y2="500"/><line x1="720" y1="560" x2="720" y2="520"/>
+    <line x1="470" y1="640" x2="470" y2="590"/><line x1="770" y1="660" x2="770" y2="608"/>
+    <line x1="330" y1="790" x2="330" y2="725"/><line x1="900" y1="770" x2="900" y2="700"/>
+  </g>
+  <g>
+    <path d="M560,500 l26,9 l-26,9 z" fill="#C8102E"/><path d="M720,520 l26,9 l-26,9 z" fill="#FFFFFF"/>
+    <path d="M470,590 l32,11 l-32,11 z" fill="#FFFFFF"/><path d="M770,608 l32,11 l-32,11 z" fill="#C8102E"/>
+    <path d="M330,725 l40,14 l-40,14 z" fill="#C8102E"/><path d="M900,700 l40,14 l-40,14 z" fill="#FFFFFF"/>
+  </g>
+
+  <!-- corridori: dal fondo al primo piano -->
+  <g transform="translate(640,560) scale(.32)" stroke="#2E5B7A" color="#C68B59"><use xlink:href="#corridore"/></g>
+  <g transform="translate(600,578) scale(.36)" stroke="#C8102E" color="#8A5A34"><use xlink:href="#corridore"/></g>
+  <g transform="translate(560,650) scale(.5)" stroke="#E08A2E" color="#E0AC7E"><use xlink:href="#corridore"/></g>
+  <g transform="translate(620,700) scale(.55)" stroke="#2E7D6B" color="#5C3A21"><use xlink:href="#corridore"/></g>
+  <g transform="translate(520,850) scale(.85)" stroke="#B5582B" color="#D59A6A"><use xlink:href="#corridore"/></g>
+  <g transform="translate(700,860) scale(.9)" stroke="#1F4E79" color="#A86B3C"><use xlink:href="#corridore"/></g>
+  <style>
+    .testa { fill: currentColor; }
+    .gamba-dietro, .gamba-avanti, .braccio-dietro, .braccio-avanti { stroke: currentColor; }
+  </style>
+
+  <!-- fiori nel prato -->
+  <g fill="#F2B544">
+    <circle cx="90" cy="760" r="6"/><circle cx="130" cy="800" r="5"/><circle cx="980" cy="880" r="6"/>
+    <circle cx="1040" cy="840" r="5"/><circle cx="1180" cy="900" r="6"/><circle cx="260" cy="700" r="5"/>
+  </g>
+  <g fill="#FFFFFF">
+    <circle cx="110" cy="785" r="5"/><circle cx="1010" cy="860" r="5"/><circle cx="1210" cy="875" r="5"/><circle cx="1150" cy="760" r="4"/>
+  </g>
+</svg>

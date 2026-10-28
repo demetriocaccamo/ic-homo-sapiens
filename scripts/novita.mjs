@@ -76,6 +76,7 @@ const EVENTI = [
     titolo: "Corsa campestre d'istituto",
     giorno: 18, mese: "nov", anno: 2026, quando: "Mercoledì 18 novembre 2026", orario: "9:00 - 12:30",
     sommario: "Una mattinata di corsa al Parco dell'Olona per le classi della secondaria e le quinte della primaria.",
+    immagine: ["assets/img/corsa-campestre.svg", "center 72%", "Illustrazione: ragazze e ragazzi corrono su un sentiero tra i prati lungo il torrente, segnato da bandierine"],
     argomenti: [["Benessere", "benessere"], ["Offerta formativa", "offerta-formativa"]],
     sezioni: [
       ["Cos'è", `<p>La corsa campestre d'istituto è una gara di corsa su prato organizzata dai docenti di scienze motorie
@@ -134,6 +135,9 @@ const EVENTI = [
                     <li class="breadcrumb-item"><a href="/scuole-sezione-notizie.html#eventi" title="Vai alla pagina: Eventi">Eventi</a></li>
                     <li class="breadcrumb-item active" aria-current="page"><span>${e.titolo}</span></li>
                   $2`)
+      .replace(/<div class="title-img"[^>]*><\/div>/, () => e.immagine
+        ? `<div class="title-img" role="img" aria-label="${e.immagine[2]}" style="background-image: url('${e.immagine[0]}'); background-position: ${e.immagine[1]};"></div>`
+        : "")
       .replace(/<h1 class="h2">[^<]*<\/h1>\s*<div class="h3 text-greendark mb-3">[^<]*<\/div>\s*<p class="mb-0">[^<]*<\/p>/,
         `<h1 class="h2">${e.titolo}</h1>\n                <div class="h3 text-greendark mb-3">${e.quando}</div>\n                <p class="mb-0">${e.sommario}</p>`)
       .replace(/(<div class="h4">Argomenti<\/div>\s*<div class="badges">)[\s\S]*?(<\/div><!-- \/badges -->)/, `$1${e.argomenti.map(([t, a]) => `
