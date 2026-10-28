@@ -68,6 +68,93 @@ for (const n of NOTIZIE) {
   write(`${n.id}.html`, s);
 }
 
+// ---------------------------------------------------------------- eventi
+// Ogni evento ha una scheda generata dal template "scheda evento" del modello Scuole.
+const EVENTI = [
+  {
+    id: "evento-corsa-campestre",
+    titolo: "Corsa campestre d'istituto",
+    giorno: 18, mese: "nov", anno: 2026, quando: "Mercoledì 18 novembre 2026", orario: "9:00 - 12:30",
+    sommario: "Una mattinata di corsa al Parco dell'Olona per le classi della secondaria e le quinte della primaria.",
+    argomenti: [["Benessere", "benessere"], ["Offerta formativa", "offerta-formativa"]],
+    sezioni: [
+      ["Cos'è", `<p>La corsa campestre d'istituto è una gara di corsa su prato organizzata dai docenti di scienze motorie
+        della secondaria e dai docenti di educazione motoria della primaria. È un'occasione per fare sport all'aperto,
+        conoscere il parco lungo il torrente e stare insieme tra classi diverse.</p>
+        <p>I primi sei classificati di ogni categoria della secondaria rappresentano la scuola alla fase provinciale dei
+        Campionati studenteschi di corsa campestre.</p>`],
+      ["Chi partecipa", `<ul>
+          <li>tutte le classi della secondaria "Rita Levi-Montalcini"</li>
+          <li>le classi quinte delle primarie "Gianni Rodari" e "Don Lorenzo Milani"</li>
+        </ul>
+        <p>Le gare sono divise per anno di corso, maschili e femminili:</p>
+        <ul>
+          <li>classi quinte della primaria: 800 metri</li>
+          <li>classi prime della secondaria: 1.000 metri</li>
+          <li>classi seconde e terze della secondaria: 1.500 metri</li>
+        </ul>`],
+      ["Luogo", `<p><strong>Parco dell'Olona</strong>, area dei prati lungo il torrente, Castelbruno (MI).</p>
+        <p>Le classi raggiungono il parco a piedi, accompagnate dai docenti.</p>`],
+      ["Date e orari", `<ul>
+          <li><strong>Mercoledì 18 novembre 2026</strong>, dalle 9:00 alle 12:30</li>
+          <li>Partenza dalla scuola alle 8:30, rientro entro le 12:30</li>
+          <li>In caso di maltempo la corsa è rinviata a <strong>mercoledì 25 novembre</strong>, con gli stessi orari</li>
+        </ul>
+        <p>Dopo il rientro le lezioni proseguono regolarmente; alla primaria la mensa è confermata.</p>`],
+      ["Cosa portare", `<ul>
+          <li>tuta o abbigliamento sportivo comodo e una giacca impermeabile</li>
+          <li>scarpe da ginnastica adatte a correre sull'erba</li>
+          <li>una borraccia con acqua e un cambio di maglietta</li>
+        </ul>`],
+      ["Costi", `<p>La partecipazione è gratuita.</p>`],
+      ["Autorizzazioni", `<p>Le famiglie riceveranno una circolare con le indicazioni e il modulo di autorizzazione da
+        consegnare ai docenti. Gli alunni esonerati dall'attività fisica partecipano come aiuto all'organizzazione.</p>`],
+      ["Contatti", `<p>Segreteria dell'Istituto, Via Alessandro Volta, 24 - Castelbruno (MI)<br>
+        Tel. 02 9637 4410 - Email <a href="mailto:miic8zh00q@istruzione.it">miic8zh00q@istruzione.it</a></p>`],
+    ],
+  },
+];
+{
+  const tplEvento = read("scuole-scheda-evento.html");
+  for (const e of EVENTI) {
+    const indice = e.sezioni.map(([t], i) => `
+                    <li>
+                      <a class="list-item scroll-anchor-offset" href="#art-par-${String(i + 1).padStart(2, "0")}">${t}</a>
+                    </li>`).join("");
+    const corpo = e.sezioni.map(([t, html], i) => `
+                <h2 class="h4" id="art-par-${String(i + 1).padStart(2, "0")}">${t}</h2>
+                <div class="col-lg-12 px-0 wysiwig-text mb-4">
+                  ${html}
+                </div>`).join("");
+    const s = tplEvento
+      .replace(/<title>[^<]*<\/title>/, `<title>${e.titolo} - Istituto Comprensivo Homo Sapiens</title>`)
+      .replace(/(<ol class="breadcrumbs-list" data-element="breadcrumb">)[\s\S]*?(<\/ol>)/, `$1
+                    <li class="breadcrumb-item"><a href="/" title="Vai alla pagina: Home">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/scuole-sezione-notizie.html" title="Vai alla pagina: Novità">Novità</a></li>
+                    <li class="breadcrumb-item"><a href="/scuole-sezione-notizie.html#eventi" title="Vai alla pagina: Eventi">Eventi</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><span>${e.titolo}</span></li>
+                  $2`)
+      .replace(/<h1 class="h2">[^<]*<\/h1>\s*<div class="h3 text-greendark mb-3">[^<]*<\/div>\s*<p class="mb-0">[^<]*<\/p>/,
+        `<h1 class="h2">${e.titolo}</h1>\n                <div class="h3 text-greendark mb-3">${e.quando}</div>\n                <p class="mb-0">${e.sommario}</p>`)
+      .replace(/(<div class="h4">Argomenti<\/div>\s*<div class="badges">)[\s\S]*?(<\/div><!-- \/badges -->)/, `$1${e.argomenti.map(([t, a]) => `
+                    <a href="/scuole-argomenti.html#${a}" class="badge badge-sm badge-pill badge-outline-greendark">${t}</a>`).join("")}
+                  $2`)
+      // collegamento "Titolo della circolare" del template: non c'è ancora una circolare
+      .replace(/\s*<div class="text-icon">\s*<a href="#">[\s\S]*?<p>Titolo della circolare<\/p>\s*<\/a>\s*<\/div>/, "")
+      .replace(/(<div id="lista-paragrafi"[^>]*>\s*<ul class="link-list">)[\s\S]*?(<\/ul>)/, `$1${indice}
+                  $2`)
+      .replace(/<article class="article-wrapper pt-4 px-3">[\s\S]*?<\/article>/, `<article class="article-wrapper pt-4 px-3">${corpo}
+                <div class="article-footer">
+                  <p><strong>Pubblicato:</strong> 28.10.2026</p>
+                </div><!-- /article-footer -->
+              </article>`)
+      // "aggiungi a Google Calendar" e "Contenuti correlati" sono segnaposto del template
+      .replace(/\s*<div class="d-flex justify-content-end pb-4">\s*<div class="actions-wrapper actions-main">\s*<p><a class="text-underline text-greendark" target="_blank" href="#">[\s\S]*?<\/div>\s*<\/div>/, "")
+      .replace(/\s*<section class="section bg-gray-gradient py-5" id="art-par-09">[\s\S]*?<\/section>(\s*<\/main>)/, "$1");
+    write(`${e.id}.html`, s);
+  }
+}
+
 // ---------------------------------------------------------------- componenti
 const cardNotizia = (n, h = "h3") => `
               <div class="card card-bg card-vertical-thumb bg-white card-thumb-rounded mb-4">
@@ -120,7 +207,26 @@ const cardCircolare = (c, h = "h3") => `
                   </div>
                 </div><!-- /card-body -->
               </div><!-- /card -->`;
-const TESTO_EVENTI = "Non ci sono eventi in programma. Il calendario scolastico 2026/2027 sarà pubblicato dopo la verifica della delibera regionale della Lombardia e delle delibere del Consiglio d'istituto.";
+const cardEvento = (e, h = "h3") => `
+              <div class="card card-bg card-event bg-white card-thumb-rounded mb-4">
+                <div class="card-body">
+                  <div class="card-content">
+                    <${h} class="h5"><a href="/${e.id}.html">${e.titolo}</a></${h}>
+                    <p>${e.sommario}</p>
+                  </div>
+                </div><!-- /card-body -->
+                <div class="card-event-dates">
+                  <div class="card-event-dates-icon">
+                    <svg class="icon svg-calendar">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-calendar"></use>
+                    </svg>
+                  </div><!-- /card-event-dates-icon -->
+                  <div class="card-event-dates-content">
+                    <p class="font-weight-normal"><strong>${e.quando}<br />${e.orario}</strong></p>
+                  </div><!-- /card-event-dates-content -->
+                </div><!-- /card-event-dates -->
+              </div><!-- /card -->`;
+const TESTO_EVENTI = "Il calendario scolastico 2026/2027 sarà pubblicato dopo la verifica della delibera regionale della Lombardia e delle delibere del Consiglio d'istituto.";
 
 // ---------------------------------------------------------------- panoramica Novità
 {
@@ -144,8 +250,10 @@ ${CIRCOLARI.map((c) => `
             <div class="col-lg-4">${cardCircolare(c)}
             </div>`).join("")}`) +
     sezione("bg-gray-light", "eventi", "Eventi", `
-            <div class="col-lg-8">${vuoto(TESTO_EVENTI)}
-            </div>`);
+${EVENTI.map((e) => `
+            <div class="col-lg-4">${cardEvento(e)}
+            </div>`).join("")}
+            <div class="col-12"><p class="mb-0"><small>${TESTO_EVENTI}</small></p></div>`);
   s = s.replace(/<title>[^<]*<\/title>/, "<title>Novità - Istituto Comprensivo Homo Sapiens</title>");
   s = s.replace(/(<h1 class="p-0 mb-2">Novità<\/h1>\s*<p[^>]*>)[\s\S]*?(<\/p>)/, "$1Notizie, circolari ed eventi dell'Istituto$2");
   const h1 = s.indexOf("<h1", s.indexOf("<main"));
@@ -196,7 +304,7 @@ ${CIRCOLARI.map((c) => `
           style="background-image: url('assets/img/hero-home.webp');">`)
     // Notizie, circolari ed eventi
     .replace(/(<section class="section bg-white py-2 py-lg-3 py-xl-5">\s*<div class="container">\s*<div class="row variable-gutters">)[\s\S]*?(<\/div><!-- \/row -->\s*<\/div><!-- \/container -->\s*<\/section><!-- \/section -->)/,
-      `$1${blocco("Notizie", cardNotizia(NOTIZIE[0]), "/scuole-sezione-notizie.html#notizie", "Leggi tutte le notizie")}${blocco("Circolari", cardCircolare(CIRCOLARI[0]), "/scuole-sezione-notizie.html#circolari", "Leggi tutte le circolari")}${blocco("Eventi", vuoto("Non ci sono eventi in programma."), "/scuole-sezione-notizie.html#eventi", "Vedi tutti gli eventi", "Vedi tutti")}
+      `$1${blocco("Notizie", cardNotizia(NOTIZIE[0]), "/scuole-sezione-notizie.html#notizie", "Leggi tutte le notizie")}${blocco("Circolari", cardCircolare(CIRCOLARI[0]), "/scuole-sezione-notizie.html#circolari", "Leggi tutte le circolari")}${blocco("Eventi", cardEvento(EVENTI[0]), "/scuole-sezione-notizie.html#eventi", "Vedi tutti gli eventi", "Vedi tutti")}
           $2`)
     // Servizi in evidenza
     .replace(/(<div class="container position-relative slided-top">)[\s\S]*?(<div class="pb-5 text-center">\s*<a class="text-underline" href=")[^"]*(">)/,
