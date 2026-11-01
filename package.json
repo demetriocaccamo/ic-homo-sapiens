@@ -8,5 +8,8 @@
     "personalizza": "node scripts/personalizza.mjs",
     "dev": "npx --yes serve public -l 3000"
   },
-  "license": "BSD-3-Clause"
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
 }

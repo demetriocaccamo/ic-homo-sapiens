@@ -14,12 +14,13 @@ a partire dai template HTML ufficiali ([italia/design-scuole-pagine-statiche](ht
 - `scripts/novita.mjs` — notizie, circolari, eventi e contenuti della home page.
 - `scripts/argomenti.mjs` — pagina Argomenti: per ogni argomento le pagine e i documenti collegati; collega anche le etichette delle schede servizio.
 - `scripts/lab.mjs` — sezione Lab: inserisce nel layout del sito le lezioni della cartella `lezioni/` e mette la voce "Lab" nella barra in alto. Va eseguito per ultimo.
+- `scripts/analytics.mjs` — inserisce in tutte le pagine lo script di Vercel Web Analytics (le statistiche si vedono nella scheda Analytics del progetto su Vercel). Va eseguito per ultimo.
 - `scripts/documenti_pdf.py` — genera i 9 PDF di "Le carte della scuola" in `public/documenti/` (richiede `pip install reportlab pypdf`).
 
 Gli script si eseguono in quest'ordine e si possono rieseguire:
 
 ```bash
-node scripts/personalizza.mjs && node scripts/istituto-comprensivo.mjs && node scripts/scheda.mjs && node scripts/servizi.mjs && node scripts/novita.mjs
+node scripts/personalizza.mjs && node scripts/istituto-comprensivo.mjs && node scripts/scheda.mjs && node scripts/servizi.mjs && node scripts/novita.mjs && node scripts/argomenti.mjs && node scripts/lab.mjs && node scripts/analytics.mjs
 ```
 
 I dati dell'Istituto sono fittizi.
