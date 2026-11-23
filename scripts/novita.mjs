@@ -73,9 +73,96 @@ for (const n of NOTIZIE) {
 // Ogni evento ha una scheda generata dal template "scheda evento" del modello Scuole.
 const EVENTI = [
   {
+    id: "evento-open-day-infanzia",
+    titolo: "Open day delle scuole dell'infanzia",
+    data: "2026-12-05", quando: "Sabato 5 dicembre 2026", orario: "9:30 - 12:00",
+    sommario: "Le scuole dell'infanzia \"Maria Montessori\" e \"Il Girasole\" aprono le porte alle famiglie dei bambini da iscrivere per il 2027/2028.",
+    immagine: ["assets/img/hero-home.webp", "center", "Illustrazione: una figura in stile pittura rupestre cammina su un libro aperto, tra simboli, lettere e numeri"],
+    circolare: ["Circolare n. 32 del 23 novembre 2026: open day di dicembre", "/circolari/circ032_2026_open-day.pdf"],
+    argomenti: [["Iscrizioni", "iscrizioni"], ["Offerta formativa", "offerta-formativa"]],
+    sezioni: [
+      ["Cos'è", `<p>Una mattinata per visitare le sezioni, conoscere le insegnanti e capire come si svolge la giornata alla
+        scuola dell'infanzia, in vista delle iscrizioni per l'anno scolastico 2027/2028.</p>`],
+      ["Luogo", `<ul>
+          <li><strong>Infanzia "Maria Montessori"</strong>, via dei Tigli 5, Borgo San Rocco</li>
+          <li><strong>Infanzia "Il Girasole"</strong>, via Cascina Verde 12</li>
+        </ul>
+        <p>L'open day si svolge in entrambi i plessi, con lo stesso programma.</p>`],
+      ["Programma", `<ul>
+          <li><strong>dalle 9:30</strong>: accoglienza e visita delle sezioni, del salone e del giardino</li>
+          <li><strong>alle 10:00</strong>: la referente del plesso presenta l'offerta formativa, il tempo scuola (40 ore, dalle 8:00
+            alle 16:00) e la mensa, e risponde alle domande</li>
+          <li><strong>fino alle 12:00</strong>: laboratori di pittura, manipolazione e racconti per i bambini</li>
+        </ul>`],
+      ["Come partecipare", `<p>La visita è libera e non serve prenotare. Per i laboratori dei bambini è gradita un'email alla
+        segreteria, <a href="mailto:miic8zh00q@istruzione.it">miic8zh00q@istruzione.it</a>, con il nome del plesso e il numero
+        dei partecipanti.</p>
+        <p>L'open day fa parte del progetto di continuità "Ponti" ed è aperto anche alle famiglie dei comuni vicini.</p>`],
+      ["Contatti", `<p>Segreteria dell'Istituto, Via Alessandro Volta, 24 - Castelbruno (MI)<br>
+        Tel. 02 9637 4410 - Email <a href="mailto:miic8zh00q@istruzione.it">miic8zh00q@istruzione.it</a></p>`],
+    ],
+  },
+  {
+    id: "evento-open-day-primaria",
+    titolo: "Open day delle scuole primarie",
+    data: "2026-12-12", quando: "Sabato 12 dicembre 2026", orario: "9:30 - 12:30",
+    sommario: "Le primarie \"Gianni Rodari\" e \"Don Lorenzo Milani\" presentano il tempo pieno e propongono laboratori per i bambini dell'ultimo anno di infanzia.",
+    immagine: ["assets/img/hero-home.webp", "center", "Illustrazione: una figura in stile pittura rupestre cammina su un libro aperto, tra simboli, lettere e numeri"],
+    circolare: ["Circolare n. 32 del 23 novembre 2026: open day di dicembre", "/circolari/circ032_2026_open-day.pdf"],
+    argomenti: [["Iscrizioni", "iscrizioni"], ["Offerta formativa", "offerta-formativa"]],
+    sezioni: [
+      ["Cos'è", `<p>Una mattinata per conoscere le scuole primarie dell'Istituto, in vista delle iscrizioni alla classe prima per
+        l'anno scolastico 2027/2028.</p>`],
+      ["Luogo", `<ul>
+          <li><strong>Primaria "Gianni Rodari"</strong>, via Alessandro Manzoni 31, Centro</li>
+          <li><strong>Primaria "Don Lorenzo Milani"</strong>, via Cascina Verde 14</li>
+        </ul>
+        <p>L'open day si svolge in entrambi i plessi, con lo stesso programma.</p>`],
+      ["Programma", `<ul>
+          <li><strong>dalle 9:30</strong>: accoglienza e visita di aule, laboratori, palestra e mensa</li>
+          <li><strong>alle 10:00</strong>: presentazione del tempo pieno (40 ore, dalle 8:30 alle 16:30), dei progetti e dei
+            servizi di pre e post scuola</li>
+          <li><strong>fino alle 12:30</strong>: laboratori per i bambini: coding senza computer, lettura animata, scienze</li>
+        </ul>`],
+      ["Come partecipare", `<p>La visita è libera e non serve prenotare. Per i laboratori dei bambini è gradita un'email alla
+        segreteria, <a href="mailto:miic8zh00q@istruzione.it">miic8zh00q@istruzione.it</a>, con il nome del plesso e il numero
+        dei partecipanti.</p>
+        <p>L'open day fa parte del progetto di continuità "Ponti" ed è aperto anche alle famiglie dei comuni vicini.</p>`],
+      ["Contatti", `<p>Segreteria dell'Istituto, Via Alessandro Volta, 24 - Castelbruno (MI)<br>
+        Tel. 02 9637 4410 - Email <a href="mailto:miic8zh00q@istruzione.it">miic8zh00q@istruzione.it</a></p>`],
+    ],
+  },
+  {
+    id: "evento-open-day-secondaria",
+    titolo: "Open day della scuola secondaria",
+    data: "2026-12-19", quando: "Sabato 19 dicembre 2026", orario: "9:30 - 12:30",
+    sommario: "La secondaria \"Rita Levi-Montalcini\" presenta le seconde lingue, l'inglese potenziato e i laboratori di coding e robotica.",
+    immagine: ["assets/img/hero-home.webp", "center", "Illustrazione: una figura in stile pittura rupestre cammina su un libro aperto, tra simboli, lettere e numeri"],
+    circolare: ["Circolare n. 32 del 23 novembre 2026: open day di dicembre", "/circolari/circ032_2026_open-day.pdf"],
+    argomenti: [["Iscrizioni", "iscrizioni"], ["Offerta formativa", "offerta-formativa"]],
+    sezioni: [
+      ["Cos'è", `<p>Una mattinata per conoscere la scuola secondaria di I grado, in vista delle iscrizioni alla classe prima per
+        l'anno scolastico 2027/2028. È pensata anche per le famiglie che arrivano dalle primarie dei comuni vicini.</p>`],
+      ["Luogo", `<p><strong>Secondaria "Rita Levi-Montalcini"</strong>, via Alessandro Volta 24, Centro</p>`],
+      ["Programma", `<ul>
+          <li><strong>dalle 9:30</strong>: accoglienza e visita della scuola</li>
+          <li><strong>alle 10:00</strong>: la dirigente scolastica presenta il tempo scuola (30 ore, dalle 8:00 alle 14:00), le
+            seconde lingue (francese e spagnolo), l'inglese potenziato con la certificazione Cambridge A2 Key e i progetti</li>
+          <li><strong>fino alle 12:30</strong>: laboratori aperti per i ragazzi di quinta: lingue straniere, coding e robotica,
+            scienze</li>
+        </ul>`],
+      ["Come partecipare", `<p>La visita è libera e non serve prenotare. Per i laboratori dei bambini è gradita un'email alla
+        segreteria, <a href="mailto:miic8zh00q@istruzione.it">miic8zh00q@istruzione.it</a>, con il nome del plesso e il numero
+        dei partecipanti.</p>
+        <p>L'open day fa parte del progetto di continuità "Ponti" ed è aperto anche alle famiglie dei comuni vicini.</p>`],
+      ["Contatti", `<p>Segreteria dell'Istituto, Via Alessandro Volta, 24 - Castelbruno (MI)<br>
+        Tel. 02 9637 4410 - Email <a href="mailto:miic8zh00q@istruzione.it">miic8zh00q@istruzione.it</a></p>`],
+    ],
+  },
+  {
     id: "evento-corsa-campestre",
     titolo: "Corsa campestre d'istituto",
-    giorno: 18, mese: "nov", anno: 2026, quando: "Mercoledì 18 novembre 2026", orario: "9:00 - 12:30",
+    data: "2026-11-18", quando: "Mercoledì 18 novembre 2026", orario: "9:00 - 12:30",
     sommario: "Una mattinata di corsa al Parco dell'Olona per le classi della secondaria e le quinte della primaria.",
     immagine: ["assets/img/corsa-campestre.svg", "center 72%", "Illustrazione: ragazze e ragazzi corrono su un sentiero tra i prati lungo il torrente, segnato da bandierine"],
     argomenti: [["Benessere", "benessere"], ["Offerta formativa", "offerta-formativa"]],
@@ -145,7 +232,8 @@ const EVENTI = [
                     <a href="/scuole-argomenti.html#${a}" class="badge badge-sm badge-pill badge-outline-greendark">${t}</a>`).join("")}
                   $2`)
       // collegamento "Titolo della circolare" del template: non c'è ancora una circolare
-      .replace(/\s*<div class="text-icon">\s*<a href="#">[\s\S]*?<p>Titolo della circolare<\/p>\s*<\/a>\s*<\/div>/, "")
+      .replace(/(\s*<div class="text-icon">\s*<a )href="#">([\s\S]*?)<p>Titolo della circolare<\/p>(\s*<\/a>\s*<\/div>)/,
+        (m, a, icona, fine) => e.circolare ? `${a}href="${e.circolare[1]}" target="_blank" rel="noopener">${icona}<p>${e.circolare[0]}</p>${fine}` : "")
       .replace(/(<div id="lista-paragrafi"[^>]*>\s*<ul class="link-list">)[\s\S]*?(<\/ul>)/, `$1${indice}
                   $2`)
       .replace(/<article class="article-wrapper pt-4 px-3">[\s\S]*?<\/article>/, `<article class="article-wrapper pt-4 px-3">${corpo}
@@ -239,10 +327,17 @@ const cardEvento = (e, h = "h3") => `
                     </svg>
                   </div><!-- /card-event-dates-icon -->
                   <div class="card-event-dates-content">
-                    <p class="font-weight-normal"><strong>${e.quando}<br />${e.orario}</strong></p>
+                    <p class="font-weight-normal"><strong>${e.quando}<br />${concluso(e) ? "Evento concluso" : e.orario}</strong></p>
                   </div><!-- /card-event-dates-content -->
                 </div><!-- /card-event-dates -->
               </div><!-- /card -->`;
+// Data di generazione delle pagine: gli eventi già passati compaiono in fondo come conclusi
+const OGGI = new Date().toISOString().slice(0, 10);
+const concluso = (e) => e.data < OGGI;
+const EVENTI_ORDINATI = [
+  ...EVENTI.filter((e) => !concluso(e)).sort((x, y) => x.data.localeCompare(y.data)),
+  ...EVENTI.filter(concluso).sort((x, y) => y.data.localeCompare(x.data)),
+];
 const TESTO_EVENTI = "Il calendario scolastico 2026/2027 sarà pubblicato dopo la verifica della delibera regionale della Lombardia e delle delibere del Consiglio d'istituto.";
 
 // ---------------------------------------------------------------- panoramica Novità
@@ -267,7 +362,7 @@ ${CIRCOLARI.map((c) => `
             <div class="col-lg-4">${cardCircolare(c)}
             </div>`).join("")}`) +
     sezione("bg-gray-light", "eventi", "Eventi", `
-${EVENTI.map((e) => `
+${EVENTI_ORDINATI.map((e) => `
             <div class="col-lg-4">${cardEvento(e)}
             </div>`).join("")}
             <div class="col-12"><p class="mb-0"><small>${TESTO_EVENTI}</small></p></div>`);
@@ -321,7 +416,7 @@ ${EVENTI.map((e) => `
           style="background-image: url('assets/img/hero-home.webp');">`)
     // Notizie, circolari ed eventi
     .replace(/(<section class="section bg-white py-2 py-lg-3 py-xl-5">\s*<div class="container">\s*<div class="row variable-gutters">)[\s\S]*?(<\/div><!-- \/row -->\s*<\/div><!-- \/container -->\s*<\/section><!-- \/section -->)/,
-      `$1${blocco("Notizie", cardNotizia(NOTIZIE[0]), "/scuole-sezione-notizie.html#notizie", "Leggi tutte le notizie")}${blocco("Circolari", cardCircolare(CIRCOLARI[0]), "/scuole-sezione-notizie.html#circolari", "Leggi tutte le circolari")}${blocco("Eventi", cardEvento(EVENTI[0]), "/scuole-sezione-notizie.html#eventi", "Vedi tutti gli eventi", "Vedi tutti")}
+      `$1${blocco("Notizie", cardNotizia(NOTIZIE[0]), "/scuole-sezione-notizie.html#notizie", "Leggi tutte le notizie")}${blocco("Circolari", cardCircolare(CIRCOLARI[0]), "/scuole-sezione-notizie.html#circolari", "Leggi tutte le circolari")}${blocco("Eventi", cardEvento(EVENTI_ORDINATI[0]), "/scuole-sezione-notizie.html#eventi", "Vedi tutti gli eventi", "Vedi tutti")}
           $2`)
     // Servizi in evidenza
     .replace(/(<div class="container position-relative slided-top">)[\s\S]*?(<div class="pb-5 text-center">\s*<a class="text-underline" href=")[^"]*(">)/,
