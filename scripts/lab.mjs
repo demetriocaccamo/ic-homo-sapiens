@@ -5,9 +5,10 @@
 // Uso: node scripts/lab.mjs (per ultimo, dopo gli altri script)
 import { readFileSync, writeFileSync, readdirSync, cpSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 
-const RADICE = new URL("../", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+const RADICE = fileURLToPath(new URL("../", import.meta.url));
 const DIR = join(RADICE, "public");
 const read = (f) => readFileSync(join(DIR, f), "utf8");
 const write = (f, s) => { mkdirSync(join(DIR, f, ".."), { recursive: true }); writeFileSync(join(DIR, f), s); };

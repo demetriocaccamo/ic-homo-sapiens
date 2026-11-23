@@ -3,8 +3,9 @@
 // Uso: node scripts/argomenti.mjs (dopo servizi.mjs e novita.mjs, prima di lab.mjs)
 import { readFileSync, writeFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const DIR = new URL("../public/", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+const DIR = fileURLToPath(new URL("../public/", import.meta.url));
 const read = (f) => readFileSync(join(DIR, f), "utf8");
 const write = (f, s) => writeFileSync(join(DIR, f), s);
 const PAGINA = "scuole-argomenti.html";

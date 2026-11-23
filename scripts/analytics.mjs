@@ -4,8 +4,9 @@
 // Uso: node scripts/analytics.mjs (per ultimo, dopo gli altri script)
 import { readFileSync, writeFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const DIR = new URL("../public/", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+const DIR = fileURLToPath(new URL("../public/", import.meta.url));
 const SNIPPET = `<!-- Vercel Web Analytics -->
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };

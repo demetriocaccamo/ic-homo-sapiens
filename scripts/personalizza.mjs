@@ -3,6 +3,7 @@
 // Uso: node scripts/personalizza.mjs
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const SCUOLA = {
   tipo: "Istituto Comprensivo",
@@ -10,7 +11,7 @@ const SCUOLA = {
   get completo() { return `${this.tipo} ${this.nome}`; },
 };
 
-const DIR = new URL("../public/", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+const DIR = fileURLToPath(new URL("../public/", import.meta.url));
 
 // Voci di menu -> pagine. "Panoramica" compare una volta per sezione, in quest'ordine.
 const PANORAMICHE = ["scuole-la-scuola.html", "scuole-sezione-servizi.html", "scuole-sezione-notizie.html", "scuole-didattica.html"];

@@ -4,8 +4,9 @@
 // Uso: node scripts/istituto-comprensivo.mjs (dopo personalizza.mjs)
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const DIR = new URL("../public/", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+const DIR = fileURLToPath(new URL("../public/", import.meta.url));
 const AS = "2026/2027";
 const NOME = "Istituto Comprensivo Homo Sapiens";
 

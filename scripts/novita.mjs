@@ -3,8 +3,9 @@
 // Uso: node scripts/novita.mjs (dopo servizi.mjs)
 import { readFileSync, writeFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const DIR = new URL("../public/", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+const DIR = fileURLToPath(new URL("../public/", import.meta.url));
 const read = (f) => readFileSync(join(DIR, f), "utf8");
 const write = (f, s) => writeFileSync(join(DIR, f), s);
 
@@ -178,6 +179,18 @@ const vuoto = (testo) => `
               </div>`;
 // Circolari: i PDF sono in public/circolari/. La più recente per prima.
 const CIRCOLARI = [
+  {
+    numero: 33, data: "23 novembre 2026", file: "circ033_2026_giorno-della-memoria.pdf",
+    titolo: "Mercoledì 27 gennaio, Giorno della Memoria",
+    destinatari: "Docenti delle scuole primarie e della secondaria, famiglie, personale ATA",
+    sommario: "Un minuto di silenzio alle 11.00 in tutte le classi, letture e attività nelle quarte e quinte della primaria, un incontro in aula magna per le terze della secondaria.",
+  },
+  {
+    numero: 32, data: "23 novembre 2026", file: "circ032_2026_open-day.pdf",
+    titolo: "Open day di dicembre nelle scuole dell'infanzia, primarie e secondaria",
+    destinatari: "Famiglie, docenti, personale ATA",
+    sommario: "Sabato 5 dicembre le scuole dell'infanzia, sabato 12 le primarie, sabato 19 la secondaria: visite, incontri con gli insegnanti e laboratori per i bambini.",
+  },
   {
     numero: 27, data: "26 ottobre 2026", file: "circ027_2026_consigli-classe-b.pdf",
     titolo: "Consigli delle classi 1ª B, 2ª B e 3ª B di martedì 10 novembre",
