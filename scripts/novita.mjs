@@ -268,6 +268,12 @@ const vuoto = (testo) => `
 // Circolari: i PDF sono in public/circolari/. La più recente per prima.
 const CIRCOLARI = [
   {
+    numero: 34, data: "25 novembre 2026", file: "circ034_2026_uscite-didattiche-preavviso.pdf",
+    titolo: "Uscite didattiche, nuovi tempi di preavviso dal 1° dicembre",
+    destinatari: "Docenti, famiglie",
+    sommario: "Le uscite con costi o fuori orario si comunicano alle famiglie almeno 15 giorni prima, quelle gratuite in orario nel Comune almeno 7 giorni prima. Autorizzazioni e quote entro 5 giorni dall'uscita.",
+  },
+  {
     numero: 33, data: "23 novembre 2026", file: "circ033_2026_giorno-della-memoria.pdf",
     titolo: "Mercoledì 27 gennaio, Giorno della Memoria",
     destinatari: "Docenti delle scuole primarie e della secondaria, famiglie, personale ATA",
