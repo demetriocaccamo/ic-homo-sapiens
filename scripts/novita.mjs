@@ -413,6 +413,25 @@ ${EVENTI_ORDINATI.map((e) => `
                 <a aria-label="${aria}" class="text-underline" href="${href}"><strong>${link}</strong></a>
               </div>
             </div><!-- /col-lg-4 -->`;
+  // Avviso su sfondo giallo in testa alla home: gli open day di dicembre, finché non sono tutti conclusi
+  const OPEN_DAY = EVENTI.filter((e) => e.id.startsWith("evento-open-day-") && !concluso(e))
+    .sort((x, y) => x.data.localeCompare(y.data));
+  const giorno = (e) => e.quando.replace(/ 2026$/, "").replace(/^S/, "s");
+  const grado = { infanzia: "Infanzia", primaria: "Primaria", secondaria: "Secondaria" };
+  const avviso = OPEN_DAY.length ? `
+      <section class="avviso-home" id="avviso" aria-label="Avviso" style="background:#ffd23f;color:#1c1c1c;padding:12px 0">
+        <div class="container">
+          <div class="row variable-gutters">
+            <div class="col">
+              <p class="m-0" style="font-size:17px;line-height:1.5"><strong>Avviso – Open day di dicembre.</strong>
+                ${OPEN_DAY.map((e) => `<a href="/${e.id}.html" style="color:#1c1c1c;font-weight:700;text-decoration:underline">${grado[e.id.replace("evento-open-day-", "")]}</a> ${giorno(e)}`).join(", ")}.
+                Visita libera, senza prenotazione (<a href="/circolari/circ032_2026_open-day.pdf" target="_blank" rel="noopener" style="color:#1c1c1c;text-decoration:underline" aria-label="Circolare n. 32 sugli open day (PDF, apre in una nuova scheda)">circolare n. 32</a>).</p>
+            </div><!-- /col -->
+          </div><!-- /row -->
+        </div><!-- /container -->
+      </section><!-- /avviso -->` : "";
+  s = s.replace(/\n\s*<section class="avviso-home"[\s\S]*?<\/section><!-- \/avviso -->/, "");
+  s = s.replace(/(<main id="main-container"[^>]*>)/, `$1${avviso}`);
   s = s
     .replace(/(<a class="btn btn-sm btn-outline-white mt-4" href=")[^"]*(">Vai alla scuola<\/a>)/, "$1/scuole-la-scuola.html$2")
     // Immagine accanto al riquadro "Benvenuti"
