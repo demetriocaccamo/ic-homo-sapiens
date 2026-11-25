@@ -34,6 +34,7 @@ const LEZIONI = [
   },
   {
     cartella: "percorso-circolari",
+    nascosta: true, // non compare nell'elenco della pagina Lab (la pagina della lezione resta raggiungibile)
     sorgente: "percorso-circolari.html",
     pagina: "lab-percorso-circolari.html",
     titolo: "Dai dati alla circolare",
@@ -165,7 +166,7 @@ function paginaPresentazione(n, l) {
       '<li class="breadcrumb-item active" aria-current="page"><span>Lab</span></li>')
     .replace(/<h1 class="p-0 mb-2">Novità<\/h1>\s*<p class="h4 font-weight-normal">[^<]*<\/p>/,
       `<h1 class="p-0 mb-2">Lab</h1>\n                <p class="h4 font-weight-normal">Lezioni su che cosa si può fare con Claude nell'organizzazione della scuola</p>`);
-  const lezioni = LEZIONI.map((l, n) => `
+  const lezioni = LEZIONI.map((l, n) => l.nascosta ? "" : `
             <div class="col-lg-6">
               <article class="card card-bg bg-white rounded mb-4">
                 <div class="card-body">
