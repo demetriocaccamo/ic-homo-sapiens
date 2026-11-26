@@ -22,7 +22,14 @@ const LEZIONI = [
     pagina: "lab-incontro-1.html",
     titolo: "L'ufficio virtuale del DS: il metodo e un caso dall'inizio alla fine",
     etichetta: "Incontro 1 · Pavia, 25 novembre · Lodi, 26 novembre",
-    descrizione: "La presentazione del primo incontro del corso per dirigenti scolastici: che cos'è Claude, i Progetti come reparti dell'ufficio, le skill, e un caso seguito dal reclamo di un genitore fino alla circolare.",
+    descrizione: "La presentazione del primo incontro del corso per dirigenti scolastici: che cos'è Claude, i Progetti come reparti dell'ufficio, le skill, e un caso seguito dal reclamo di un genitore fino alla circolare. Con le istruzioni dei quattro Progetti usati come esempio al corso.",
+    // PDF in lezioni/<cartella>/istruzioni/
+    istruzioni: [
+      ["Istruzioni_Corrispondenza_e_atti.pdf", "Corrispondenza e atti", "Risposte a famiglie, docenti ed enti, ordini del giorno degli organi collegiali, delibere e circolari nello stile della scuola. Contiene anche i dati della scuola: plessi, orari, collaboratori."],
+      ["Istruzioni_Documenti_strategici.pdf", "Documenti strategici", "Coerenza e aggiornamento di RAV, Piano di Miglioramento e PTOF: la tabella dei collegamenti, le incongruenze e le proposte di allineamento."],
+      ["Istruzioni_Comunicazione_e_sito_web.pdf", "Comunicazione e sito web", "Avvisi e notizie per il sito e messaggi per le famiglie: linguaggio semplice, struttura fissa, al massimo 120 parole."],
+      ["Istruzioni_Normativa_e_ricerca.pdf", "Normativa e ricerca", "Quadri sintetici sulla normativa scolastica, con ogni riferimento da verificare su Normattiva, Gazzetta Ufficiale o sito del Ministero."],
+    ],
   },
   {
     cartella: "percorso-circolari",
@@ -89,6 +96,7 @@ function paginaPresentazione(n, l) {
   if (/data:video/.test(src)) throw new Error(`${l.sorgente}: video incorporati non convertiti`);
   write(`lab/${l.cartella}/presentazione.html`, src);
   if (conVideo) cpSync(cartellaVideo, join(DIR, "lab", l.cartella, "video"), { recursive: true });
+  if (l.istruzioni) cpSync(join(RADICE, "lezioni", l.cartella, "istruzioni"), join(DIR, "lab", l.cartella, "istruzioni"), { recursive: true });
 
   const video = (l.video || []).map(([file, titolo, testo]) => `
             <div class="col-lg-6 mb-4">
@@ -101,6 +109,36 @@ function paginaPresentazione(n, l) {
                 </div>
               </div>
             </div>`).join("");
+  const istruzioni = (l.istruzioni || []).map(([file, titolo, testo]) => `
+            <div class="col-lg-6 mb-4">
+              <div class="card card-bg bg-white rounded h-100">
+                <div class="card-body">
+                  <small class="h6 text-muted">Progetto</small>
+                  <h3 class="h5 mt-2 mb-2">IC Homo Sapiens – ${titolo}</h3>
+                  <p>${testo}</p>
+                  <a class="btn btn-sm btn-outline-greendark" href="${base}/istruzioni/${file}" target="_blank" rel="noopener">Apri le istruzioni (PDF)</a>
+                </div>
+              </div>
+            </div>`).join("");
+  // Sezioni dopo la presentazione; il collegamento al Lab va in fondo all'ultima
+  const sezioni = [];
+  if (video) sezioni.push(["video", "I video dimostrativi", "Gli stessi video della presentazione, da guardare uno per uno.", video]);
+  if (istruzioni) sezioni.push(["istruzioni", "Le istruzioni dei progetti",
+    "Sono gli esempi di istruzioni di progetto utilizzati al corso: quattro reparti dell'ufficio virtuale della dirigente dell'IC Homo Sapiens, " +
+    "una scuola immaginaria. Ogni testo è quello che si incolla nel campo Istruzioni di un Progetto di Claude: ruolo, di cosa si occupa, " +
+    "come vuole i testi, regole sempre valide, che cosa fare con poco contesto e come consegnare gli atti. Si possono prendere come modello " +
+    "e adattare alla propria scuola.", istruzioni]);
+  const torna = `
+          <p class="mt-2"><a href="/lab.html">Torna alle lezioni del Lab</a></p>`;
+  const altre = sezioni.map(([id, titolo, intro, schede], i) => `
+      <section class="section ${i % 2 ? "bg-white" : "bg-gray-light"} py-5" id="${id}">
+        <div class="container">
+          <div class="title-section mb-3"><h2 class="h4">${titolo}</h2></div>
+          <p class="mb-4">${intro}</p>
+          <div class="row variable-gutters">${schede}
+          </div>${i === sezioni.length - 1 ? torna : ""}
+        </div>
+      </section>`).join("");
   const main = `<main id="main-container" class="main-container greendark">
       <section class="section py-2 bg-white d-none d-sm-block">
         <div class="container"><div class="row variable-gutters"><div class="col-12"><div class="breadcrumb">
@@ -129,20 +167,10 @@ function paginaPresentazione(n, l) {
             <iframe src="${base}/presentazione.html" title="Presentazione: ${l.titolo}" allow="fullscreen"
               allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
           </div>
-          <p class="mt-3"><a class="btn btn-sm btn-outline-greendark" href="${base}/presentazione.html" target="_blank" rel="noopener">Apri la presentazione a schermo intero</a></p>${video ? "" : `
-          <p class="mt-2"><a href="/lab.html">Torna alle lezioni del Lab</a></p>`}
+          <p class="mt-3"><a class="btn btn-sm btn-outline-greendark" href="${base}/presentazione.html" target="_blank" rel="noopener">Apri la presentazione a schermo intero</a></p>${sezioni.length ? "" : torna}
         </div>
       </section>
-${video ? `
-      <section class="section bg-gray-light py-5" id="video">
-        <div class="container">
-          <div class="title-section mb-3"><h2 class="h4">I video dimostrativi</h2></div>
-          <p class="mb-4">Gli stessi video della presentazione, da guardare uno per uno.</p>
-          <div class="row variable-gutters">${video}
-          </div>
-          <p class="mt-2"><a href="/lab.html">Torna alle lezioni del Lab</a></p>
-        </div>
-      </section>` : ""}
+${altre}
     </main>`;
   const pagina = guscio
     .replace(/<title>[^<]*<\/title>/, () => `<title>${l.titolo} - Lab - Istituto Comprensivo Homo Sapiens</title>`)
