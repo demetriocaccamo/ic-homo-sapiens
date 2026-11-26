@@ -77,7 +77,7 @@ const ARGOMENTI = [
   ]],
   ["Lab", "Lezioni su che cosa si può fare con Claude a scuola", [
     ["Tutte le lezioni del Lab", "lab.html"],
-    ["Lezione 1: l'ufficio virtuale del DS", "lab-ufficio-virtuale-ds.html"],
+    ["Lezione 1: l'ufficio virtuale del DS, incontro 1", "lab-incontro-1.html"],
   ]],
 ];
 const slug = (t) => t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");

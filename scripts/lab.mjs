@@ -3,7 +3,7 @@
 // - una pagina per lezione, a partire dai file in lezioni/<cartella>/ (intestazione e footer sono quelli del sito)
 // - barra in alto: la voce "Lab" sostituisce "Argomento 1, 2, 3"; resta "Tutti gli argomenti"
 // Uso: node scripts/lab.mjs (per ultimo, dopo gli altri script)
-import { readFileSync, writeFileSync, readdirSync, cpSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, readdirSync, cpSync, mkdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
@@ -17,20 +17,12 @@ const write = (f, s) => { mkdirSync(join(DIR, f, ".."), { recursive: true }); wr
 const LEZIONI = [
   {
     tipo: "presentazione",
-    cartella: "ufficio-virtuale-ds",
-    sorgente: "Ufficio_virtuale_del_DS.html",
-    pagina: "lab-ufficio-virtuale-ds.html",
-    titolo: "L'ufficio virtuale del DS",
-    etichetta: "Corso di formazione per dirigenti scolastici",
-    descrizione: "Usare l'intelligenza artificiale come metodo di lavoro, non come gadget: Progetti, skill, artefatti e connettori di Claude organizzati come i reparti di un ufficio. La presentazione del corso, con sei video dimostrativi.",
-    video: [
-      ["Video_D07_Progetti.mp4", "Un Progetto dall'interno", "Il reparto Corrispondenza e atti: istruzioni, documenti di riferimento e conversazioni raccolti in un unico spazio di lavoro che resta nel tempo."],
-      ["Video_D09_Skill.mp4", "Una skill per la delibera", "La skill delibera-organi-collegiali trasforma gli appunti di una seduta nel testo della delibera, secondo il format della scuola."],
-      ["Video_D11_Artefatti.mp4", "Una circolare come documento", "Un artefatto: la circolare prende forma accanto alla conversazione, pronta da rivedere, correggere e scaricare."],
-      ["Video_D14_Corrispondenza.mp4", "La risposta al genitore", "Un genitore lamenta il poco preavviso di un'uscita didattica: la bozza di risposta è cortese ma ferma, nel tono della scuola e senza dati personali."],
-      ["Video_D16_Documenti_strategici.mp4", "Il controllo di coerenza", "Priorità e traguardi del RAV confrontati con il Piano di miglioramento e il PTOF, con la tabella dei collegamenti e le corrispondenze che mancano."],
-      ["Video_D18_Sito_web.mp4", "Dalla direttiva al sito", "Il sito dell'IC Homo Sapiens si aggiorna descrivendo in italiano che cosa cambiare, un'area alla volta."],
-    ],
+    cartella: "incontro-1",
+    sorgente: "Incontro1_Presentazione.html",
+    pagina: "lab-incontro-1.html",
+    titolo: "L'ufficio virtuale del DS: il metodo e un caso dall'inizio alla fine",
+    etichetta: "Incontro 1 · Pavia, 25 novembre · Lodi, 26 novembre",
+    descrizione: "La presentazione del primo incontro del corso per dirigenti scolastici: che cos'è Claude, i Progetti come reparti dell'ufficio, le skill, e un caso seguito dal reclamo di un genitore fino alla circolare.",
   },
   {
     cartella: "percorso-circolari",
@@ -85,8 +77,9 @@ function paginaPresentazione(n, l) {
   // Ogni video incorporato è collegato al file della cartella Video con lo stesso contenuto
   // (il nome nell'etichetta può cambiare quando si aggiungono slide).
   const cartellaVideo = join(RADICE, "lezioni", l.cartella, "Video");
+  const conVideo = existsSync(cartellaVideo);
   const impronta = (b) => createHash("sha1").update(b).digest("hex");
-  const perContenuto = new Map(readdirSync(cartellaVideo).map((f) => [impronta(readFileSync(join(cartellaVideo, f))), f]));
+  const perContenuto = new Map(conVideo ? readdirSync(cartellaVideo).map((f) => [impronta(readFileSync(join(cartellaVideo, f))), f]) : []);
   const src = readFileSync(join(RADICE, "lezioni", l.cartella, l.sorgente), "utf8")
     .replace(/<video src="data:video\/mp4;base64,([A-Za-z0-9+/=]+)"([^>]*?)preload="auto"/g, (m, dati, a) => {
       const file = perContenuto.get(impronta(Buffer.from(dati, "base64")));
@@ -95,9 +88,9 @@ function paginaPresentazione(n, l) {
     });
   if (/data:video/.test(src)) throw new Error(`${l.sorgente}: video incorporati non convertiti`);
   write(`lab/${l.cartella}/presentazione.html`, src);
-  cpSync(join(RADICE, "lezioni", l.cartella, "Video"), join(DIR, "lab", l.cartella, "video"), { recursive: true });
+  if (conVideo) cpSync(cartellaVideo, join(DIR, "lab", l.cartella, "video"), { recursive: true });
 
-  const video = l.video.map(([file, titolo, testo]) => `
+  const video = (l.video || []).map(([file, titolo, testo]) => `
             <div class="col-lg-6 mb-4">
               <div class="card card-bg bg-white rounded h-100">
                 <div class="card-body">
@@ -131,15 +124,16 @@ function paginaPresentazione(n, l) {
         <div class="container">
           <div class="title-section mb-3"><h2 class="h4">La presentazione</h2></div>
           <p>Si sfoglia con le frecce in basso a destra, che compaiono passando con il mouse sulla presentazione, oppure
-            con i tasti freccia dopo averci cliccato sopra. Nelle slide di dimostrazione un clic avvia il video.</p>
+            con i tasti freccia dopo averci cliccato sopra.${video ? " Nelle slide di dimostrazione un clic avvia il video." : ""}</p>
           <div style="position:relative;width:100%;aspect-ratio:16/9;background:#0F1A2B;border-radius:4px;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.12)">
             <iframe src="${base}/presentazione.html" title="Presentazione: ${l.titolo}" allow="fullscreen"
               allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
           </div>
-          <p class="mt-3"><a class="btn btn-sm btn-outline-greendark" href="${base}/presentazione.html" target="_blank" rel="noopener">Apri la presentazione a schermo intero</a></p>
+          <p class="mt-3"><a class="btn btn-sm btn-outline-greendark" href="${base}/presentazione.html" target="_blank" rel="noopener">Apri la presentazione a schermo intero</a></p>${video ? "" : `
+          <p class="mt-2"><a href="/lab.html">Torna alle lezioni del Lab</a></p>`}
         </div>
       </section>
-
+${video ? `
       <section class="section bg-gray-light py-5" id="video">
         <div class="container">
           <div class="title-section mb-3"><h2 class="h4">I video dimostrativi</h2></div>
@@ -148,7 +142,7 @@ function paginaPresentazione(n, l) {
           </div>
           <p class="mt-2"><a href="/lab.html">Torna alle lezioni del Lab</a></p>
         </div>
-      </section>
+      </section>` : ""}
     </main>`;
   const pagina = guscio
     .replace(/<title>[^<]*<\/title>/, () => `<title>${l.titolo} - Lab - Istituto Comprensivo Homo Sapiens</title>`)
