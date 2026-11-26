@@ -268,6 +268,12 @@ const vuoto = (testo) => `
 // Circolari: i PDF sono in public/circolari/. La più recente per prima.
 const CIRCOLARI = [
   {
+    numero: 36, data: "26 novembre 2026", file: "circ036_2026_consiglio-orientativo.pdf",
+    titolo: "Consiglio orientativo e nuove denominazioni delle scuole superiori",
+    destinatari: "Docenti delle classi terze della secondaria, famiglie degli alunni delle classi terze, personale ATA",
+    sommario: "Entro i termini che saranno comunicati, i consigli delle classi terze formulano il consiglio orientativo, che non è vincolante. Dal decreto-legge n. 170/2026 gli istituti tecnici diventano licei tecnologici e i professionali licei professionali.",
+  },
+  {
     numero: 34, data: "25 novembre 2026", file: "circ034_2026_uscite-didattiche-preavviso.pdf",
     titolo: "Uscite didattiche, nuovi tempi di preavviso dal 1° dicembre",
     destinatari: "Docenti, famiglie",
